@@ -1,0 +1,22 @@
+server:
+-models
+--user
+--prediction
+--comment
+-routes
+--user CRUD
+--prediction CRUD
+--comment CRUD
+
+
+client
+-pages
+--Home
+--Feed?
+--Login
+--Register
+--User Page
+---shows users predictions/score etc
+
+User model
+--username, password stuff, email, score, predictions
