@@ -3,7 +3,7 @@ import React from 'react';
 export default function Testy() {
 	return (
 		<>
-			<div>hello</div>
+			<div className={"bg-black h-screen"}>hello</div>
 		</>
 	)
 }
