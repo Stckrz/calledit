@@ -17,7 +17,8 @@ const UserSchema = new mongoose.Schema({
 	},
 	score: {
 		type: Number,
-		required: true
+		required: true,
+		default: 0
 
 	},
 	predictions: {
@@ -26,7 +27,8 @@ const UserSchema = new mongoose.Schema({
 	},
 	roles: {
 		type: Array,
-		required: true
+		required: true,
+		default: ["user"]
 	}
 })
 
