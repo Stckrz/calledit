@@ -20,3 +20,7 @@ client
 
 User model
 --username, password stuff, email, score, predictions
+
+Prediction Model
+--title, description, created date, prediction date, upvotes, downvotes, comments
+

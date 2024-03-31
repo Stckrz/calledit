@@ -13,7 +13,11 @@ router.post('/register', async (req, res) => {
 	try {
 		req.body.password = await bcrypt.hash(req.body.password, 10);
 		const user = await UserModel.create(req.body)
-		res.json(user)
+		const token = jwt.sign({username: user.username}, SECRET)
+		res.json({
+			username: user.username,
+			token
+		})
 	}
 	catch (error) {
 		res.status(400).json({ message: error.message })

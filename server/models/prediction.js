@@ -1,0 +1,38 @@
+const mongoose = require('mongoose');
+
+const PredictionSchema = new mongoose.Schema({
+	title: {
+		type: String,
+		unique: true,
+		required: true
+	},
+	description: {
+		type: String,
+		required: true
+	},
+	author: {
+		type: String,
+		required: true
+	},
+	created_on: {
+		type: Date,
+		required: true,
+		default: Date.now
+	},
+	finished_on: {
+		type: Date,
+		required: true,
+		default: Date.now
+	},
+	votes: {
+		type: Array,
+		required: true,
+		default: []
+	},
+	comments: {
+		type: Array,
+		required: false
+	},
+})
+
+module.exports = mongoose.model("Prediction", PredictionSchema)

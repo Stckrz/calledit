@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .btn-primary {
+    @apply py-1 px-5 mr-2 bg-cyan-500 text-white font-semibold rounded shadow-md hover:bg-cyan-700 focus:outline-none focus:ring focus:ring-cyan-500 focus:ring-opacity-75;
+  }
+  .input-primary {
+    @apply py-1 px-2 m-2 ml-0 w-80 bg-gray-50 rounded border text-gray-600 focus:ring-2 focus:ring-cyan-500 focus:outline-none shadow shadow-gray-200;
+  }
+}
 :root {
   --max-width: 1100px;
   --border-radius: 12px;
@@ -11,7 +19,8 @@
 
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  /* --background-end-rgb: 255, 255, 255; */
+  --background-end-rgb: 225, 220, 220;
     /* --background-start-rgb: 85, 133, 181; */
     /* --background-end-rgb: 85, 133, 181; */
 
