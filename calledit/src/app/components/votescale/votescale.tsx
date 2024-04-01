@@ -14,6 +14,7 @@ interface VoteScaleProps {
 const VoteScale: React.FC<VoteScaleProps> = ({ votes, id }) => {
 	const [postVotes, setPostVotes] = useState<IVotesObject>()
 	const [errorMessage, setErrorMessage] = useState("")
+	const [rerender, setRerender] = useState("")
 
 	const [cookie] = useCookies(['userInfo'])
 
@@ -31,6 +32,8 @@ const VoteScale: React.FC<VoteScaleProps> = ({ votes, id }) => {
 		} else {
 			setErrorMessage("Must be logged in to vote")
 		}
+		getVotes()
+		setRerender("")
 	}
 
 	async function getVotes() {
@@ -40,13 +43,14 @@ const VoteScale: React.FC<VoteScaleProps> = ({ votes, id }) => {
 		} else {
 			setPostVotes(await getPredictionVotesById(id, { "username": "" }))
 		}
-
 	}
 
 	useEffect(() => {
 		getVotes()
-	}, [votes])
+	}, [votes, rerender])
 
+
+	console.log(postVotes)
 	return (
 		<>
 			<div className={"flex flex-col w-full"}>
