@@ -6,6 +6,11 @@ const PredictionSchema = new mongoose.Schema({
 		unique: false,
 		required: true
 	},
+	category: {
+		type: String,
+		required: true,
+		default: "other"
+	},
 	description: {
 		type: String,
 		required: true

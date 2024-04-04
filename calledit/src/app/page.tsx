@@ -7,7 +7,7 @@ export default function Home() {
 		<main className={styles.main}>
 			<div className={"flex flex-col w-1/2 h-full"}>
 				<div>{"thats so much better isn't it?"}</div>
-				<PredictionFeed />
+				<PredictionFeed feedType={"default"}/>
 			</div>
 		</main>
 	);

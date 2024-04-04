@@ -1,12 +1,13 @@
 export interface IPrediction {
 	title: string,
+	category: string
 	description: string,
 	author: string,
 	finished_on?: string,
 	created_on?: string,
 	votes?: any[],
 	comments?: any[],
-	_id?: string
+	_id?: string,
 }
 
 export interface IVotesObject {

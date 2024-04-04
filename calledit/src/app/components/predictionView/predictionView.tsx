@@ -16,6 +16,7 @@ const Prediction: React.FC<PredictionProps> = ({ item }) => {
 					<div>{item.title}</div>
 					<Link href={`/user/profile/${item.author}`}><div>{item.author}</div></Link>
 				</div>
+				<div>{item.category}</div>
 				<div>{item.description}</div>
 				<div className={"flex items-center justify-center gap-2 w-full"}>
 					{item.created_on && item.finished_on &&

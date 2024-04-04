@@ -7,18 +7,19 @@ import { getPredictionsByUsername, getPredictionsVotedByUsername } from '@/app/l
 
 interface PredictionFeedProps {
 	username?: string,
+	feedType: string,
+	modifier?: string
 }
-const PredictionFeed: React.FC<PredictionFeedProps> = ({ username }) => {
+const PredictionFeed: React.FC<PredictionFeedProps> = ({ username="", feedType, modifier }) => {
 	const [predictionArray, setPredictionArray] = useState<IPrediction[]>([])
-	const [feedType, setFeedType] = useState("default")
 
 	async function predictionFetch() {
 		if (username) {
-			if (feedType === "votes") {
+			if (modifier === "votes") {
 				const arr = await getPredictionsVotedByUsername(username)
 				setPredictionArray(arr.reverse())
 			}
-			else if (feedType === "userposts") {
+			else if (modifier === "userposts") {
 				const arr = await getPredictionsByUsername(username)
 				setPredictionArray(arr.reverse())
 			} else {
@@ -26,25 +27,26 @@ const PredictionFeed: React.FC<PredictionFeedProps> = ({ username }) => {
 				setPredictionArray(arr.reverse())
 			}
 		} else {
+			if (feedType==="default"){
 			const arr = await getPredictions()
 			setPredictionArray(arr.reverse())
+			} 
 		}
 	}
 
 	useEffect(() => {
 		predictionFetch()
-	}, [feedType])
-	console.log(feedType)
+	}, [])
 
 	return (
 		<>
 			<div className={"flex flex-col gap-2"}>
-				{username &&
-					<div className={"flex"}>
-						<button className={"btn-primary"} onClick={() => { setFeedType("userposts") }}>posts by user</button>
-						<button className={"btn-primary"} onClick={() => { setFeedType("votes") }}>posts user voted on</button>
-					</div>
-				}
+				{/* {username && */}
+				{/* 	<div className={"flex"}> */}
+				{/* 		<button className={"btn-primary"} onClick={() => { setFeedType("userposts") }}>posts by user</button> */}
+				{/* 		<button className={"btn-primary"} onClick={() => { setFeedType("votes") }}>posts user voted on</button> */}
+				{/* 	</div> */}
+				{/* } */}
 				{predictionArray.length > 0 &&
 					predictionArray.map((item) => {
 						return (

@@ -38,6 +38,18 @@ router.get('/getVotedByUser/:username', async (req, res) => {
 	}
 })
 
+//gets all predictions by category name
+router.get('/getByCategory/:category', async (req, res) => {
+	const category = req.params.category
+	try {
+		const data = await PredictionModel.find({"category": category})
+		res.json(data)
+	}
+	catch (error) {
+		res.status(500).json({ message: error.message })
+	}
+})
+
 //deletes ALL predictions!!!!//
 router.delete('/deleteAll', async (req, res) => {
 	try {
@@ -56,6 +68,7 @@ router.post('/post', isLoggedIn, async (req, res) => {
 	req.body.username = username;
 	const data = new PredictionModel({
 		title: req.body.title,
+		category: req.body.category,
 		description: req.body.description,
 		author: req.body.author,
 		finished_on: req.body.finished_on,
