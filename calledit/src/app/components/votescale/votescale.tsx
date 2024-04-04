@@ -1,10 +1,9 @@
 'use client'
 import React, { useState, useEffect } from 'react';
-import { FaRegCircle, FaDotCircle } from "react-icons/fa";
-import { updatePrediction } from '@/app/library/api/predictionfetch';
-import { getPredictionVotesById } from '@/app/library/api/predictionfetch';
+import { updatePrediction, getPredictionVotesById } from '@/app/library/api/predictionfetch';
 import { IVotesObject } from '@/app/models/predictionmodels';
 import { useCookies } from 'react-cookie';
+import ProgressBar from '@components/common/progressBar/progressBar';
 
 interface VoteScaleProps {
 	votes: any[],
@@ -27,7 +26,8 @@ const VoteScale: React.FC<VoteScaleProps> = ({ votes, id }) => {
 				}
 				updatePrediction({ votes: [...votes, obj] }, id, cookie.userInfo.token)
 			} else {
-				setErrorMessage("You already voted lol")
+				setErrorMessage("You can only vote once on a prediction")
+
 			}
 		} else {
 			setErrorMessage("Must be logged in to vote")
@@ -50,34 +50,30 @@ const VoteScale: React.FC<VoteScaleProps> = ({ votes, id }) => {
 	}, [votes, rerender])
 
 
-	console.log(postVotes)
 	return (
 		<>
-			<div className={"flex flex-col w-full"}>
+			<div className={"flex flex-col w-full "}>
 				<div className={"flex w-full gap-1"}>
 					<div
 						onClick={() => { userVote("yes") }}
-						className={"flex items-center justify-center text-seagreen"}>
+						className={"flex items-center g-1 justify-center text-seagreen"}>
 						{postVotes?.uservote?.vote === "yes"
-							? <FaDotCircle size={"1.5em"} />
-							: <FaRegCircle size={"1.5em"} />
+							? <div
+								className={"h-5 aspect-square cursor-pointer rounded-full ring-2 bg-seagreen ring-seagreen"}>
+							</div>
+							: <div className={"h-5 aspect-square cursor-pointer rounded-full ring-2 ring-seagreen hover:bg-seagreen"}></div>
 						}
 					</div>
 
 					<div
-						className={"flex items-center justify-center text-cinna"}
+						className={"flex items-center gap-1 justify-center text-cinna"}
 						onClick={() => { userVote("no") }}>
 						{postVotes?.uservote?.vote === "no"
-							? <FaDotCircle size={"1.5em"} />
-							: <FaRegCircle size={"1.5em"} />
+							? <div className={"h-5 aspect-square cursor-pointer rounded-full ring-2 ring-cinna bg-cinna"}></div>
+							: <div className={"h-5 aspect-square cursor-pointer rounded-full ring-2 ring-cinna hover:bg-cinna shadow-2xl shadow-cinna"}></div>
 						}
 					</div>
-
-					<div className={"w-full h-6 bg-cinna rounded-2xl"}>
-						{postVotes !== undefined &&
-							<div className={"h-6 bg-seagreen rounded-2xl"} style={{ width: `${postVotes.ratio}%` }}></div>
-						}
-					</div>
+					<ProgressBar  ratio={postVotes?.ratio} troughClassName={"w-full h-6 bg-cinna rounded-2xl"} barClassName={"h-6 bg-seagreen rounded-2xl"}/>
 				</div>
 				<div className={"text-cinna"}>{errorMessage}</div>
 			</div>

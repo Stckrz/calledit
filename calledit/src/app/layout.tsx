@@ -15,12 +15,13 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className={inter.className}>
-				<CookiesProvider>
+			<CookiesProvider>
+				{/* <body className={inter.className}> */}
+				<body className={"flex flex-col h-100vh"}>
 					<Navbar />
 					{children}
-				</CookiesProvider>
-			</body>
+				</body>
+			</CookiesProvider>
 		</html>
 	);
 }

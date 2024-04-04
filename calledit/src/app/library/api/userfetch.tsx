@@ -32,3 +32,32 @@ export async function userLogin(login: ILogin) {
 	} catch (error) { console.log(error) }
 
 }
+
+export async function getUserByUsername(username: string){
+	try{
+		const response = await fetch(`http://localhost:5000/users/find/${username}`)
+		const data = await response.json()
+		return data
+	}
+	catch (error) {console.log(error)}
+}
+
+
+export async function getPredictionsByUsername(username: string){
+	try{
+		const response = await fetch(`http://localhost:5000/predictions/getByUser/${username}`)
+		const data = await response.json()
+		return data
+	}
+	catch (error) {console.log(error)}
+}
+
+
+export async function getPredictionsVotedByUsername(username: string){
+	try{
+		const response = await fetch(`http://localhost:5000/predictions/getVotedByUser/${username}`)
+		const data = await response.json()
+		return data
+	}
+	catch (error) {console.log(error)}
+}

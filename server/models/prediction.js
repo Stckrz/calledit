@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const PredictionSchema = new mongoose.Schema({
 	title: {
 		type: String,
-		unique: true,
+		unique: false,
 		required: true
 	},
 	description: {
@@ -32,6 +32,10 @@ const PredictionSchema = new mongoose.Schema({
 	comments: {
 		type: Array,
 		required: false
+	},
+	completed: {
+		type: Boolean,
+		default: function() {return this.finished_on < Date.now()},
 	},
 })
 

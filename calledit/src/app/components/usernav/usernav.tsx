@@ -13,12 +13,16 @@ const UserNav: React.FC = () => {
 			{
 				!cookie.userInfo?.username
 					? <div className={"w-44 flex mr-2 items-center justify-between"}>
-						<button className={"w-20 btn-primary bg-transparent border border-white p-2"}>
-							<Link href="/user/login">Login</Link>
-						</button>
-						<div className={"w-20 rounded btn-primary bg-white text-cyan-500 p-2 m-0"}>
-							<Link href="/user/register">Sign Up</Link>
-						</div>
+						<Link href="/user/login">
+							<button className={"w-20 btn-primary bg-transparent border border-white p-2"}>
+								Login
+							</button>
+						</Link>
+						<Link href="/user/register">
+							<div className={"w-20 rounded btn-primary bg-white text-cyan-500 p-2 m-0"}>
+								Sign Up
+							</div>
+						</Link>
 					</div>
 					: <div className={"flex gap-3"}>
 						<div className={"flex font-semibold items-center justify-center"}>
@@ -26,13 +30,13 @@ const UserNav: React.FC = () => {
 							{cookie.userInfo.username}
 						</div>
 						<div>
-							<div
-								className={"w-20 flex items-center justify-center btn-primary bg-transparent border border-white p-2"}
-								onClick={() => { removeCookie('userInfo') }}>
-								<Link href="/user/logout">
+							<Link href="/user/logout">
+								<div
+									className={"w-20 flex items-center justify-center btn-primary bg-transparent border border-white p-2"}
+									onClick={() => { removeCookie('userInfo') }}>
 									Logout
-								</Link>
-							</div>
+								</div>
+							</Link>
 						</div>
 					</div>
 			}

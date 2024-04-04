@@ -35,7 +35,7 @@ const RegisterForm: React.FC = () => {
 		let a = await registerUser(userData)
 
 		if (a.username) {
-			setCookie('userInfo', a, {path: '/'})
+			setCookie('userInfo', a, {path: '/', maxAge: 1800})
 			router.push("/")
 		} else {
 			setRegisterError("username already exists")
@@ -44,7 +44,7 @@ const RegisterForm: React.FC = () => {
 
 	return (
 		<>
-			<div className={"flex flex-col items-center justify-center gap-1 w-full h-full"}>
+			<div className={"flex flex-col items-center justify-center gap-1 aspect-video h-full"}>
 				<div className={"flex flex-col items-end justify-center gap-1 p-6 border border-gray-200 rounded-xl shadow-lg shadow-gray-400 bg-gray-100"}>
 					<label className={"flex flex-col font-bold text-gray-600"}>Username
 						<input className={"input-primary"} onChange={e => { setUsername(e.target.value) }} />

@@ -14,6 +14,31 @@ router.get('/getAll', async (req, res) => {
 	}
 })
 
+//gets all predictions made by a specific user
+router.get('/getByUser/:username', async (req, res) => {
+	const username = req.params.username
+	try {
+		const data = await PredictionModel.find({"author": username})
+		res.json(data)
+	}
+	catch (error) {
+		res.status(500).json({ message: error.message })
+	}
+})
+
+//gets all predictions a user has voted on..
+router.get('/getVotedByUser/:username', async (req, res) => {
+	const username = req.params.username
+	try {
+		const data = await PredictionModel.find({"votes": {$elemMatch: {"username": username}}})
+		res.json(data)
+	}
+	catch (error) {
+		res.status(500).json({ message: error.message })
+	}
+})
+
+//deletes ALL predictions!!!!//
 router.delete('/deleteAll', async (req, res) => {
 	try {
 		const data = await PredictionModel.deleteMany({})
@@ -37,7 +62,6 @@ router.post('/post', isLoggedIn, async (req, res) => {
 		votes: req.body.votes,
 		comments: req.body.comments
 	})
-
 	try {
 		const dataToSave = await data.save();
 		res.status(200).json(dataToSave)

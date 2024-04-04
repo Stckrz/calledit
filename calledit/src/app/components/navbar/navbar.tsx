@@ -29,15 +29,16 @@ const Navbar: React.FC = () => {
 								</Link>
 							</div>
 							<div className={"h-1/6 m-1 bg-cyan-500 border border-black flex items-center justify-center rounded"}>home</div>
-							<div className={"h-1/6 m-1 bg-cyan-500 border border-black flex items-center justify-center rounded"}>
-								navstuff
-								<Link href="/prediction-page">New</Link>
-							</div>
+							<Link href="/prediction-page">
+									<div className={"h-1/6 m-1 bg-cyan-500 border border-black flex items-center justify-center rounded"}>
+										New
+									</div>
+							</Link>
 						</div>
 
 					}
 				</div>
-				: <div className={"h-16 flex items-center justify-between border border-b-gray-500 bg-cyan-500"}>
+				: <div className={"h-1/12 flex items-center justify-between border border-b-gray-500 bg-cyan-500 p-2"}>
 					<div
 						className={"h-full w-112 bg-cyan-500 flex items-center justify-center rounded"}>
 						<Link href="/">
@@ -48,15 +49,16 @@ const Navbar: React.FC = () => {
 						</Link>
 					</div>
 					<div className={"w-auto h-full bg-cyan-500 flex items-center justify-center rounded"}>
-						<div className={"flex items-center justify-center bg-cyan-800 rounded w-20 btn-primary"}>
-							<Link href="/prediction-page">New</Link>
-						</div>
+						<Link href="/prediction-page">
+							<div className={"flex items-center justify-center bg-cyan-800 rounded w-20 btn-primary"}>
+								New
+							</div>
+						</Link>
 					</div>
 					<div className={"h-full w-112 bg-cyan-500 flex items-center justify-center rounded"}><UserNav /></div>
 				</div>
 			}
 		</>
-						// <div className={"w-20 rounded btn-primary bg-white text-cyan-500 p-2 m-0"}>
 	)
 }
 
