@@ -26,6 +26,18 @@ router.get('/getByUser/:username', async (req, res) => {
 	}
 })
 
+//gets all predictions made by a specific user that have not yet been confirmed.
+router.get('/getConfirmedByUser/:username', async (req, res) => {
+	const username = req.params.username
+	try {
+		const data = await PredictionModel.find({"author": username, "authorPredictionConfirmed": false})
+		res.json(data)
+	}
+	catch (error) {
+		res.status(500).json({ message: error.message })
+	}
+})
+
 //gets all predictions a user has voted on..
 router.get('/getVotedByUser/:username', async (req, res) => {
 	const username = req.params.username

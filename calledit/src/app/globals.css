@@ -7,7 +7,7 @@
     @apply flex items-center justify-center py-1 px-5 mr-2 bg-cyan-500 text-white font-semibold rounded shadow-md hover:bg-cyan-700 focus:outline-none focus:ring focus:ring-cyan-500 focus:ring-opacity-75;
   }
   .input-primary {
-    @apply py-1 px-2 m-2 ml-0 w-80 bg-gray-50 rounded border text-gray-600 focus:ring-2 focus:ring-cyan-500 focus:outline-none shadow shadow-gray-200;
+    @apply py-1 px-2 m-2 ml-0 bg-gray-50 rounded border text-gray-600 focus:ring-2 focus:ring-cyan-500 focus:outline-none shadow shadow-gray-200 w-full;
   }
 }
 :root {
@@ -18,8 +18,8 @@
     "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
 
   --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
   /* --background-end-rgb: 255, 255, 255; */
+  --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 225, 220, 220;
     /* --background-start-rgb: 85, 133, 181; */
     /* --background-end-rgb: 85, 133, 181; */

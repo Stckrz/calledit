@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from 'react';
 import { addPrediction } from '@/app/library/api/predictionfetch';
+import { categoryArray } from '@/app/library/objects/categoryArray';
 
 import { useRouter } from 'next/navigation';
 import { useCookies } from 'react-cookie';
@@ -20,8 +21,6 @@ const PredictionForm: React.FC = () => {
 	const router = useRouter();
 	const [submitError, setSubmitError] = useState("");
 
-	const categoryArray = ["Politics", "Personal", "Other"]
-
 	const formCheckHandler = () => {
 		if (!cookie.userInfo) {
 			setSubmitError("hahaha")
@@ -35,9 +34,10 @@ const PredictionForm: React.FC = () => {
 	}
 
 	async function handlePredictionSubmit() {
+		category === "" && setCategory("Other")
 		const predictionData = {
 			"title": title,
-			"category": category,
+			"category": category === "" ? "Other" : category,
 			"description": description,
 			"author": cookie.userInfo.username,
 			"votes": [],
@@ -56,18 +56,18 @@ const PredictionForm: React.FC = () => {
 	return (
 		<>
 			<div className={"flex flex-col items-center justify-center gap-1 w-full flex-grow border"}>
-				<div className={"flex flex-col items-start justify-center gap-1 p-6 border border-gray-200 rounded-xl shadow-lg shadow-gray-400 bg-gray-100"}>
-					<label className={"flex flex-col font-bold text-gray-600"}>Title
+				<div className={"sm:w-2/4 md:w-1/2 lg:w-1/3 flex flex-col items-start justify-center gap-1 p-6 border border-gray-200 rounded-xl shadow-lg shadow-gray-400 bg-gray-100"}>
+					<label className={"w-full flex flex-col font-bold text-gray-600"}>Title
 						<input className={"input-primary"} onChange={e => { setTitle(e.target.value) }} />
 					</label>
-					<div className={"flex flex-col font-bold text-gray-600"}>Category
+					<div className={"flex flex-col font-bold text-gray-600 w-full"}>Category
 						<Dropdown options={categoryArray} value={category} callback={setCategory} />
 					</div>
-					<label className={"flex flex-col font-bold text-gray-600"}>Description
+					<label className={"w-full flex flex-col font-bold text-gray-600"}>Description
 						<input className={"input-primary"} onChange={e => { setDescription(e.target.value) }} />
 					</label>
 
-					<label className={"flex flex-col font-bold text-gray-600 align-start"}>Completion Date
+					<label className={"w-full flex flex-col font-bold text-gray-600 align-start"}>Completion Date
 						<DatePicker className={"input-primary h-9"} selected={completionDate} onChange={(date: Date) => setCompletionDate(date)} />
 					</label>
 					<button className={"btn-primary self-end"} onClick={() => { formCheckHandler() }}>submit</button>

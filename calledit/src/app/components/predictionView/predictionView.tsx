@@ -7,8 +7,8 @@ import Link from 'next/link';
 interface PredictionProps {
 	item: IPrediction
 }
-
 const Prediction: React.FC<PredictionProps> = ({ item }) => {
+
 	return (
 		<>
 			<div className={"flex flex-col items-start justify-center gap-1 p-6 m-1 border border-gray-200 rounded-xl shadow-lg shadow-gray-400 bg-gray-100"}>
@@ -20,7 +20,7 @@ const Prediction: React.FC<PredictionProps> = ({ item }) => {
 				<div>{item.description}</div>
 				<div className={"flex items-center justify-center gap-2 w-full"}>
 					{item.created_on && item.finished_on &&
-						<TimeScale title={item.title} timeCreated={item.created_on} timeFinished={item.finished_on} />
+						<TimeScale title={item.title} timeCreated={item.created_on} timeFinished={item.finished_on} completed={item.completed}/>
 					}
 				</div>
 				<div className={"flex items-center justify-center gap-2 w-full"}>

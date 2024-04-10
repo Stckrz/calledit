@@ -18,6 +18,23 @@ export async function getPredictionById(id: string) {
 	catch (error) { console.log(error) }
 }
 
+export async function getPredictionsByCategory(category: string) {
+	try {
+		const response = await fetch(`http://localhost:5000/predictions/getByCategory/${category}`)
+		const data = await response.json()
+		return data
+	}
+	catch (error) { console.log(error) }
+}
+export async function getConfirmedByUser(username: string) {
+	try{
+		const response = await fetch(`http://localhost:5000/predictions/getConfirmedByUser/${username}`)
+		const data = await response.json()
+		return data
+	}
+	catch (error){console.log(error)}
+}
+
 export async function getPredictionVotesById(id: string, username: any, ) {
 	try {
 		const response = await fetch(`http://localhost:5000/predictions/getOne/${id}/votes`, {

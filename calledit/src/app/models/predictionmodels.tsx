@@ -5,8 +5,10 @@ export interface IPrediction {
 	author: string,
 	finished_on?: string,
 	created_on?: string,
-	votes?: any[],
+	votes?: IUserVote[],
 	comments?: any[],
+	completed: boolean,
+	authorPredictionConfirmed: boolean,
 	_id?: string,
 }
 

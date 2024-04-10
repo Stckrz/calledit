@@ -1,16 +1,16 @@
 'use client'
 import React, { useState, useEffect } from 'react';
-import { getPredictions } from '@/app/library/api/predictionfetch';
+import { getPredictions, getPredictionsByCategory } from '@/app/library/api/predictionfetch';
 import { IPrediction } from '@/app/models/predictionmodels';
 import Prediction from '@components/predictionView/predictionView';
 import { getPredictionsByUsername, getPredictionsVotedByUsername } from '@/app/library/api/userfetch';
 
 interface PredictionFeedProps {
 	username?: string,
-	feedType: string,
 	modifier?: string
 }
-const PredictionFeed: React.FC<PredictionFeedProps> = ({ username="", feedType, modifier }) => {
+
+const PredictionFeed: React.FC<PredictionFeedProps> = ({ username = "", modifier }) => {
 	const [predictionArray, setPredictionArray] = useState<IPrediction[]>([])
 
 	async function predictionFetch() {
@@ -27,16 +27,22 @@ const PredictionFeed: React.FC<PredictionFeedProps> = ({ username="", feedType, 
 				setPredictionArray(arr.reverse())
 			}
 		} else {
-			if (feedType==="default"){
-			const arr = await getPredictions()
-			setPredictionArray(arr.reverse())
-			} 
+			if (modifier) {
+				if (modifier === "All") {
+					const arr = await getPredictions()
+					setPredictionArray(arr.reverse())
+				} else {
+					const arr = await getPredictionsByCategory(modifier)
+					setPredictionArray(arr.reverse())
+				}
+			}
 		}
 	}
 
 	useEffect(() => {
 		predictionFetch()
-	}, [])
+		console.log(modifier)
+	}, [modifier])
 
 	return (
 		<>

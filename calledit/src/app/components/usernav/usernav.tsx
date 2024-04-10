@@ -33,7 +33,7 @@ const UserNav: React.FC = () => {
 							<Link href="/user/logout">
 								<div
 									className={"w-20 flex items-center justify-center btn-primary bg-transparent border border-white p-2"}
-									onClick={() => { removeCookie('userInfo') }}>
+									onClick={() => { removeCookie('userInfo',{path:'/'}) }}>
 									Logout
 								</div>
 							</Link>

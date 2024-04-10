@@ -8,7 +8,7 @@ const PredictionSchema = new mongoose.Schema({
 	},
 	category: {
 		type: String,
-		required: true,
+		required: false,
 		default: "other"
 	},
 	description: {
@@ -42,6 +42,11 @@ const PredictionSchema = new mongoose.Schema({
 		type: Boolean,
 		default: function() {return this.finished_on < Date.now()},
 	},
+	authorPredictionConfirmed: {
+		type: Boolean,
+		required: true,
+		default: false,
+	}
 })
 
 module.exports = mongoose.model("Prediction", PredictionSchema)

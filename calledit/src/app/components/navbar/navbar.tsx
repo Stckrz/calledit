@@ -9,16 +9,19 @@ import { AiOutlineHome } from 'react-icons/ai';
 const Navbar: React.FC = () => {
 	const [mobileNavShown, setMobileNavShown] = useState(false)
 	const width = useViewport();
+
 	return (
 		<>
 			{width.width <= 800
-				? <div className={"h-1/12 flex items-center justify-between border border-b-gray-500 bg-cyan-500 relative"}>
+				? <div className={"h-1/12 flex items-center justify-between border border-b-gray-500 bg-cyan-500 relative z-50"}>
 					<div className={"m-5"} onClick={() => { setMobileNavShown(!mobileNavShown) }}>
 						<RxHamburgerMenu size={"3em"} />
 					</div>
-					<div className={"h-1/6 bg-cyan-500 flex items-center justify-center"}><UserNav /></div>
+					<div className={"h-1/6 bg-cyan-500 flex items-center justify-center"}>
+						<UserNav />
+					</div>
 					{mobileNavShown &&
-						<div className={"h-screen w-full absolute top-20 bg-gray-100"}>
+						<div className={"h-screen w-full absolute top-20 bg-background-gray"}>
 							<div
 								className={"h-1/6 m-1 bg-cyan-500 border border-black flex items-center justify-center rounded"}>
 								<Link href="/">
@@ -30,9 +33,9 @@ const Navbar: React.FC = () => {
 							</div>
 							<div className={"h-1/6 m-1 bg-cyan-500 border border-black flex items-center justify-center rounded"}>home</div>
 							<Link href="/prediction-page">
-									<div className={"h-1/6 m-1 bg-cyan-500 border border-black flex items-center justify-center rounded"}>
-										New
-									</div>
+								<div className={"h-1/6 m-1 bg-cyan-500 border border-black flex items-center justify-center rounded"}>
+									New
+								</div>
 							</Link>
 						</div>
 
@@ -55,7 +58,9 @@ const Navbar: React.FC = () => {
 							</div>
 						</Link>
 					</div>
-					<div className={"h-full w-112 bg-cyan-500 flex items-center justify-center rounded"}><UserNav /></div>
+					<div className={"h-full w-112 bg-cyan-500 flex items-center justify-center rounded"}>
+						<UserNav />
+					</div>
 				</div>
 			}
 		</>

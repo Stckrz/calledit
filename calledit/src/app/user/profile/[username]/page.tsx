@@ -26,7 +26,7 @@ const UserProfile: React.FC<UserProfileProps> = (params) => {
 		<>
 			<div className={"h-full w-full flex items-center justify-center border-cinna"}>
 				{user.username ?
-					<div className={"h-full w-1/2"}>
+					<div className={"flex flex-col w-full md:w-1/2 h-full"}>
 						<div>
 							{`${user.username}'s Profile`}
 						</div>
