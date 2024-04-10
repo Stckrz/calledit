@@ -45,7 +45,7 @@ const Navbar: React.FC = () => {
 					<div
 						className={"h-full w-112 bg-cyan-500 flex items-center justify-center rounded"}>
 						<Link href="/">
-							<div className={"flex items-center justify-center gap-1"}>
+							<div className={"flex flex-col items-center justify-center font-bold"}>
 								<AiOutlineHome size={"1.5em"} />
 								Home
 							</div>

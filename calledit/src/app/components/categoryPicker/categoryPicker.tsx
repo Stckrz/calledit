@@ -12,7 +12,7 @@ const CategoryPicker: React.FC<CategoryPickerProps> = ({ setCategory }) => {
 				<div className={"flex items-center justify-evenly border bg-cyan-500 relative rounded"}>
 					{categoryArray.map((item) => {
 						return (
-							<div key={item} onClick={() => { setCategory(item) }}>{item}</div>
+							<div className={"cursor-pointer"} key={item} onClick={() => { setCategory(item) }}>{item}</div>
 						)
 					})
 					}

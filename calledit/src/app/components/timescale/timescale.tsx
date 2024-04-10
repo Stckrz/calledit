@@ -7,7 +7,7 @@ interface TimeScaleProps {
 	timeCreated: string,
 	timeFinished: string,
 	completed: boolean
-}
+};
 
 const TimeScale: React.FC<TimeScaleProps> = ({ title, timeCreated, timeFinished, completed }) => {
 	const [timeProgress, setTimeProgress] = useState(0);
@@ -26,25 +26,26 @@ const TimeScale: React.FC<TimeScaleProps> = ({ title, timeCreated, timeFinished,
 		} else {
 			setTimeProgress(100);
 		}
-	}
+	};
 
 	useEffect(() => {
 		getTimeProgress();
-	}, [])
+	}, []);
 
 	return (
 		<>
 			<div className={"flex flex-col w-full"}>
-				<ProgressBar ratio={timeProgress} />
 				{!completed
-					? <div>
-						<div><Timer dateCompleted={finishedDate} /></div>
+					&& <div>
+						<ProgressBar ratio={timeProgress} />
+						<div>
+							<div><Timer dateCompleted={finishedDate} /></div>
+						</div>
 					</div>
-					: <div>completed</div>
 				}
 			</div>
 		</>
 	);
-}
+};
 
 export default TimeScale;

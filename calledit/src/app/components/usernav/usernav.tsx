@@ -26,8 +26,12 @@ const UserNav: React.FC = () => {
 					</div>
 					: <div className={"flex gap-3"}>
 						<div className={"flex font-semibold items-center justify-center"}>
+						<Link href="/user/dashboard">
+								<div className={"flex items-center justify-center font-semibold"}>
 							<FaRegUser />
 							{cookie.userInfo.username}
+							</div>
+						</Link>
 						</div>
 						<div>
 							<Link href="/user/logout">

@@ -21,12 +21,12 @@ const ConfirmPredictions: React.FC<ConfirmPredictionsProps> = ({ username, token
 		const updatedData = {
 			authorPredictionConfirmed: result
 		}
-			updatePrediction(updatedData, id, token)
+		updatePrediction(updatedData, id, token)
 	}
 
 	useEffect(() => {
 		getNonConfirmedPredictions()
-	}, [username])
+	}, [])
 
 	return (
 		<>
@@ -39,15 +39,20 @@ const ConfirmPredictions: React.FC<ConfirmPredictionsProps> = ({ username, token
 						</div>
 						<div>{item.category}</div>
 						<div>{item.description}</div>
-						<div className={"flex items-center justify-center gap-2 w-full"}>
+						<div 
+							className={"flex items-center justify-center gap-2 w-full"}>
 							{item.votes && item._id &&
-								<VoteScale id={item._id} votes={item.votes} />
+								<VoteScale prediction={item} id={item._id} votes={item.votes} />
 							}
 						</div>
 						<div>
 							<div>did this happen?</div>
 							<div className={"flex"}>
-								<button onClick={item._id && updatePredictionResult(item._id, true)} className={"btn-primary"}>y</button>
+								{/* <button */}
+								{/* 	onClick={item._id && updatePredictionResult(item._id, true)} */}
+								{/* 	className={"btn-primary"}> */}
+								{/* 	y */}
+								{/* </button> */}
 								<button className={"btn-primary bg-cinna"}>n</button>
 							</div>
 						</div>

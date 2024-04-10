@@ -5,11 +5,13 @@ export const useViewport = () => {
 	const [width, setWidth] = useState(window.innerWidth)
 
 	useEffect(() => {
-		const handleResize = () => {
-			setWidth(window.innerWidth);
+		if (typeof window !== undefined) {
+			const handleResize = () => {
+				setWidth(window.innerWidth);
+			}
+			window.addEventListener("resize", handleResize);
+			return () => window.removeEventListener("resize", handleResize);
 		}
-		window.addEventListener("resize", handleResize);
-		return () => window.removeEventListener("resize", handleResize);
 	}, [window.innerWidth])
 
 	return { width }

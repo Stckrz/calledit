@@ -4,7 +4,7 @@ interface ProgressBarProps {
 	barClassName?: string
 }
 
-const ProgressBar: React.FC<ProgressBarProps> = ({ratio, troughClassName = "w-full h-2 bg-seagreen", barClassName = "bg-cinna h-2" }) => {
+const ProgressBar: React.FC<ProgressBarProps> = ({ratio, troughClassName = "w-full h-2 bg-cyan-500", barClassName = "bg-cinna h-2" }) => {
 
 	return (
 		<>

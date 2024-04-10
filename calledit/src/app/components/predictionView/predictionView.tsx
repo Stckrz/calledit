@@ -25,7 +25,7 @@ const Prediction: React.FC<PredictionProps> = ({ item }) => {
 				</div>
 				<div className={"flex items-center justify-center gap-2 w-full"}>
 					{item.votes && item._id &&
-						<VoteScale id={item._id} votes={item.votes} />
+						<VoteScale id={item._id} votes={item.votes} prediction={item} />
 					}
 				</div>
 				<div>{item.comments}</div>
