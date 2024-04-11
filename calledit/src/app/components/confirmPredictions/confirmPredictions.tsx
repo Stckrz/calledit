@@ -33,6 +33,7 @@ const ConfirmPredictions: React.FC<ConfirmPredictionsProps> = ({ username, token
 		<>
 			{confirmedPredictions.map((item) => {
 				return (
+					item.completed &&
 					<div key={item._id} className={"w-1/2 flex flex-col items-start justify-center gap-1 p-6 m-1 border border-gray-200 rounded-xl shadow-lg shadow-gray-400 bg-gray-100"}>
 						<div className={"flex justify-between items-center w-full font-semibold"}>
 							<div>{item.title}</div>
@@ -62,6 +63,7 @@ const ConfirmPredictions: React.FC<ConfirmPredictionsProps> = ({ username, token
 							</div>
 						</div>
 					</div>
+
 				)
 			})}
 		</>

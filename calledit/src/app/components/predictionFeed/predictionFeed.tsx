@@ -41,7 +41,6 @@ const PredictionFeed: React.FC<PredictionFeedProps> = ({ username = "", modifier
 
 	useEffect(() => {
 		predictionFetch()
-		console.log(modifier)
 	}, [modifier])
 
 	return (
