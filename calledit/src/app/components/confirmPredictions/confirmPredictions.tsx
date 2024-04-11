@@ -4,6 +4,7 @@ import { updatePrediction, getConfirmedByUser } from '@/app/library/api/predicti
 import { IPrediction } from '@/app/models/predictionmodels';
 import Link from 'next/link';
 import VoteScale from '../votescale/votescale';
+import { IoCloseSharp, IoCheckmarkSharp } from 'react-icons/io5';
 
 interface ConfirmPredictionsProps {
 	username: string,
@@ -39,7 +40,7 @@ const ConfirmPredictions: React.FC<ConfirmPredictionsProps> = ({ username, token
 						</div>
 						<div>{item.category}</div>
 						<div>{item.description}</div>
-						<div 
+						<div
 							className={"flex items-center justify-center gap-2 w-full"}>
 							{item.votes && item._id &&
 								<VoteScale prediction={item} id={item._id} votes={item.votes} />
@@ -48,12 +49,16 @@ const ConfirmPredictions: React.FC<ConfirmPredictionsProps> = ({ username, token
 						<div>
 							<div>did this happen?</div>
 							<div className={"flex"}>
-								{/* <button */}
-								{/* 	onClick={item._id && updatePredictionResult(item._id, true)} */}
-								{/* 	className={"btn-primary"}> */}
-								{/* 	y */}
-								{/* </button> */}
-								<button className={"btn-primary bg-cinna"}>n</button>
+								<button
+									onClick={() => { item._id && updatePredictionResult(item._id, true) }}
+									className={"btn-primary"}>
+									<IoCheckmarkSharp size={"2em"}/>
+								</button>
+								<button 
+									onClick={() => { item._id && updatePredictionResult(item._id, false) }}
+									className={"btn-primary bg-cinna"}>
+									<IoCloseSharp size={"2em"}/>
+								</button>
 							</div>
 						</div>
 					</div>

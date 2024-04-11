@@ -44,8 +44,7 @@ const PredictionSchema = new mongoose.Schema({
 	},
 	authorPredictionConfirmed: {
 		type: Boolean,
-		required: true,
-		default: false,
+		default: null,
 	}
 })
 

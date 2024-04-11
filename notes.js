@@ -28,8 +28,8 @@
 // Prediction Model
 // XX--title, description, created date, prediction date, upvotes, downvotes, 
 // comments
-// --added 'completed' field, still needs to have a field where it's been 'user confirmed', and also a ummm category
+// XX--added 'completed' field, still needs to have a field where it's been 'user confirmed', and also a ummm category
 //
 // Common Components:
-// --Add a dropdown component that takes props: an array of options, as well as a callback setstate function.
+// XX--Add a dropdown component that takes props: an array of options, as well as a callback setstate function.
 

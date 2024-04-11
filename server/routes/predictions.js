@@ -30,7 +30,7 @@ router.get('/getByUser/:username', async (req, res) => {
 router.get('/getConfirmedByUser/:username', async (req, res) => {
 	const username = req.params.username
 	try {
-		const data = await PredictionModel.find({"author": username, "authorPredictionConfirmed": false})
+		const data = await PredictionModel.find({"author": username, "authorPredictionConfirmed": null})
 		res.json(data)
 	}
 	catch (error) {

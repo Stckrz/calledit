@@ -1,5 +1,6 @@
 import { IPrediction } from "@/app/models/predictionmodels"
 
+//get all predictions
 export async function getPredictions() {
 	try {
 		const response = await fetch('http://localhost:5000/predictions/getAll')
@@ -9,6 +10,7 @@ export async function getPredictions() {
 	catch (error) { console.log(error) }
 }
 
+//get a specific prediction by id
 export async function getPredictionById(id: string) {
 	try {
 		const response = await fetch(`http://localhost:5000/predictions/getOne/${id}`)
@@ -18,6 +20,7 @@ export async function getPredictionById(id: string) {
 	catch (error) { console.log(error) }
 }
 
+//get all predictions fitting a category
 export async function getPredictionsByCategory(category: string) {
 	try {
 		const response = await fetch(`http://localhost:5000/predictions/getByCategory/${category}`)
@@ -26,6 +29,8 @@ export async function getPredictionsByCategory(category: string) {
 	}
 	catch (error) { console.log(error) }
 }
+
+//get all predictions that have yet to be confirmed by the user
 export async function getConfirmedByUser(username: string) {
 	try{
 		const response = await fetch(`http://localhost:5000/predictions/getConfirmedByUser/${username}`)
@@ -35,6 +40,7 @@ export async function getConfirmedByUser(username: string) {
 	catch (error){console.log(error)}
 }
 
+//get the voting info for a prediction, based on id
 export async function getPredictionVotesById(id: string, username: any, ) {
 	try {
 		const response = await fetch(`http://localhost:5000/predictions/getOne/${id}/votes`, {
@@ -50,6 +56,7 @@ export async function getPredictionVotesById(id: string, username: any, ) {
 	catch (error) { console.log(error) }
 }
 
+//update a prediction
 export async function updatePrediction(updatedPredictionData: Partial<IPrediction>, id: string, token: string) {
 	try {
 		const response = await fetch(`http://localhost:5000/predictions/update/${id}`, {
@@ -66,6 +73,7 @@ export async function updatePrediction(updatedPredictionData: Partial<IPredictio
 	catch (error) { console.log(error) }
 }
 
+//add a new prediction
 export async function addPrediction(predictionData: IPrediction, token: string) {
 	try {
 		const response = await fetch("http://localhost:5000/predictions/post", {
