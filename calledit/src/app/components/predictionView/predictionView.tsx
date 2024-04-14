@@ -27,7 +27,9 @@ const Prediction: React.FC<PredictionProps> = ({ item, mode }) => {
 			authorPredictionConfirmed: result
 		}
 		item._id &&
-			console.log(cookie.userInfo.token)
+			console.log("data", updatedData)
+			console.log("user token",cookie.userInfo.token)
+			console.log("item id", item._id)
 			updatePrediction(updatedData, item._id, cookie.userInfo?.token)
 	}
 

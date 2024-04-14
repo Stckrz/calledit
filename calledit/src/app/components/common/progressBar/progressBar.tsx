@@ -8,8 +8,8 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ratio, troughClassName = "w-fu
 
 	return (
 		<>
-			<div className={troughClassName}>
-				<div className={barClassName} style={{ width: `${ratio}%` }}>
+			<div className={`${troughClassName}`}>
+				<div className={`${barClassName}`} style={{ width: `${ratio}%` }}>
 				</div>
 			</div>
 		</>

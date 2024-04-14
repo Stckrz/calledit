@@ -12,7 +12,9 @@ const ThisOrThat: React.FC<ThisOrThatProps> = ({ callback, value = null }) => {
 		callback(selectedValue)	
 	}
 
-	useEffect(()=>{},[handleClick])
+	useEffect(()=>{
+		value
+		},[handleClick])
 
 		return (
 			<>

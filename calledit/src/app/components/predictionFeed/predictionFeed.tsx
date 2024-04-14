@@ -25,33 +25,35 @@ const PredictionFeed: React.FC<PredictionFeedProps> = ({ username = "", modifier
 		if (feedType === FeedType.ConfirmPrediction) {
 			const tempArr = []
 			const arr = await getConfirmedByUser(username)
-			for(let i of arr){
-				i.completed &&
-				tempArr.push(i)
+			for (let i of arr) {
+				i.completed && i.authorPredictionConfirmed === null &&
+					tempArr.push(i)
 			}
+			console.log(tempArr)
 			setPredictionArray(tempArr)
-		}
-
-		if (username) {
-			if (modifier === "votes") {
-				const arr = await getPredictionsVotedByUsername(username)
-				setPredictionArray(arr.reverse())
-			}
-			else if (modifier === "userposts") {
-				const arr = await getPredictionsByUsername(username)
-				setPredictionArray(arr.reverse())
-			} else {
-				const arr = await getPredictionsByUsername(username)
-				setPredictionArray(arr.reverse())
-			}
 		} else {
-			if (modifier) {
-				if (modifier === "All") {
-					const arr = await getPredictions()
+
+			if (username) {
+				if (modifier === "votes") {
+					const arr = await getPredictionsVotedByUsername(username)
+					setPredictionArray(arr.reverse())
+				}
+				else if (modifier === "userposts") {
+					const arr = await getPredictionsByUsername(username)
 					setPredictionArray(arr.reverse())
 				} else {
-					const arr = await getPredictionsByCategory(modifier)
+					const arr = await getPredictionsByUsername(username)
 					setPredictionArray(arr.reverse())
+				}
+			} else {
+				if (modifier) {
+					if (modifier === "All") {
+						const arr = await getPredictions()
+						setPredictionArray(arr.reverse())
+					} else {
+						const arr = await getPredictionsByCategory(modifier)
+						setPredictionArray(arr.reverse())
+					}
 				}
 			}
 		}
@@ -63,7 +65,7 @@ const PredictionFeed: React.FC<PredictionFeedProps> = ({ username = "", modifier
 
 	return (
 		<>
-			<div className={"flex flex-col gap-2 w-1/2"}>
+			<div className={"flex flex-col gap-2 w-3/4 self-center"}>
 				{/* {username && */}
 				{/* 	<div className={"flex"}> */}
 				{/* 		<button className={"btn-primary"} onClick={() => { setFeedType("userposts") }}>posts by user</button> */}

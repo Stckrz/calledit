@@ -20,7 +20,6 @@ const VoteScale: React.FC<VoteScaleProps> = ({ votes, id, prediction }) => {
 	const [cookie] = useCookies(['userInfo'])
 
 	const userVote = (vote: boolean) => {
-		console.log(vote)
 		if (cookie.userInfo) {
 			if (!postVotes?.uservote) {
 				let obj = {
@@ -54,19 +53,20 @@ const VoteScale: React.FC<VoteScaleProps> = ({ votes, id, prediction }) => {
 
 	return (
 		<>
-			<div className={"flex w-full items-center justify-center"}>
-				{!prediction.completed
-					? <ThisOrThat callback={userVote} value={postVotes?.uservote?.vote} />
-					: <div>Voting for this prediction has closed</div>
-				}
-				<div>{errorMessage}</div>
-				<ProgressBar
-					ratio={postVotes?.ratio}
-					troughClassName={"w-full h-6 bg-cinna rounded-2xl"}
-					barClassName={"h-6 bg-cyan-500 rounded-2xl"}
-				/>
-			</div >
-
+			<div className={"flex flex-col w-full items.center justify-center"}>
+				<div className={"flex w-full items-center justify-center"}>
+					{!prediction.completed
+						&& <ThisOrThat callback={userVote} value={postVotes?.uservote?.vote} />
+					}
+					<div>{errorMessage}</div>
+					<ProgressBar
+						ratio={postVotes?.ratio}
+						troughClassName={"w-full h-6 bg-cinna rounded-2xl"}
+						barClassName={"h-6 bg-cyan-500 rounded-2xl"}
+					/>
+				</div >
+				<div className={"flex justify-center"}>{prediction.completed && "Voting for this prediction has ended"}</div>
+			</div>
 		</>
 	)
 }

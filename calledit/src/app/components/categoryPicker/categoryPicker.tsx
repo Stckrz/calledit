@@ -8,7 +8,7 @@ interface CategoryPickerProps {
 const CategoryPicker: React.FC<CategoryPickerProps> = ({ setCategory }) => {
 	return (
 		<>
-			<div className={"flex flex-col w-full"}>
+			<div className={"flex flex-col w-3/4"}>
 				<div className={"flex items-center justify-evenly border bg-cyan-500 relative rounded"}>
 					{categoryArray.map((item) => {
 						return (
