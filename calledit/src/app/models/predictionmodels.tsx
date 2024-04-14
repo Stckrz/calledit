@@ -5,7 +5,7 @@ export interface IPrediction {
 	author: string,
 	finished_on?: string,
 	created_on?: string,
-	votes?: IUserVote[],
+	votes: IUserVote[],
 	comments?: any[],
 	completed: boolean,
 	authorPredictionConfirmed: boolean,
@@ -22,5 +22,5 @@ export interface IVotesObject {
 
 export interface IUserVote {
 	username: string,
-	vote: string
+	vote: boolean
 }

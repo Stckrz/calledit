@@ -53,17 +53,16 @@ const ConfirmPredictions: React.FC<ConfirmPredictionsProps> = ({ username, token
 								<button
 									onClick={() => { item._id && updatePredictionResult(item._id, true) }}
 									className={"btn-primary"}>
-									<IoCheckmarkSharp size={"2em"}/>
+									<IoCheckmarkSharp size={"2em"} />
 								</button>
-								<button 
+								<button
 									onClick={() => { item._id && updatePredictionResult(item._id, false) }}
 									className={"btn-primary bg-cinna"}>
-									<IoCloseSharp size={"2em"}/>
+									<IoCloseSharp size={"2em"} />
 								</button>
 							</div>
 						</div>
 					</div>
-
 				)
 			})}
 		</>

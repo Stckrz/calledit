@@ -4,6 +4,7 @@ import { updatePrediction, getPredictionVotesById } from '@/app/library/api/pred
 import { IPrediction, IVotesObject } from '@/app/models/predictionmodels';
 import { useCookies } from 'react-cookie';
 import ProgressBar from '@components/common/progressBar/progressBar';
+import ThisOrThat from '../common/thisOrThat/thisOrThat';
 
 interface VoteScaleProps {
 	votes: any[],
@@ -18,14 +19,15 @@ const VoteScale: React.FC<VoteScaleProps> = ({ votes, id, prediction }) => {
 
 	const [cookie] = useCookies(['userInfo'])
 
-	const userVote = (vote: string) => {
+	const userVote = (vote: boolean) => {
+		console.log(vote)
 		if (cookie.userInfo) {
 			if (!postVotes?.uservote) {
 				let obj = {
 					username: cookie.userInfo.username,
 					vote: vote
 				}
-				updatePrediction({ votes: [...prediction.votes!, obj] }, prediction._id!, cookie.userInfo.token)
+				updatePrediction({ votes: [...votes, obj] }, id, cookie.userInfo.token)
 			} else {
 				setErrorMessage("You can only vote once on a prediction")
 
@@ -50,40 +52,21 @@ const VoteScale: React.FC<VoteScaleProps> = ({ votes, id, prediction }) => {
 		getVotes()
 	}, [votes, rerender])
 
-
 	return (
 		<>
-			{!prediction.completed
-				? <div className={"flex flex-col w-full "}>
-					<div className={"flex w-full gap-1"}>
-						<div
-							onClick={() => { userVote("yes") }}
-							className={"flex items-center g-1 justify-center text-cyan-500"}>
-							{postVotes?.uservote?.vote === "yes"
-								? <div
-									className={"h-5 aspect-square cursor-pointer rounded-full ring-2 bg-cyan-500 ring-cyan-500"}>
-								</div>
-								: <div className={"h-5 aspect-square cursor-pointer rounded-full ring-2 ring-cyan-500 hover:bg-cyan-500"}></div>
-							}
-						</div>
+			<div className={"flex w-full items-center justify-center"}>
+				{!prediction.completed
+					? <ThisOrThat callback={userVote} value={postVotes?.uservote?.vote} />
+					: <div>Voting for this prediction has closed</div>
+				}
+				<div>{errorMessage}</div>
+				<ProgressBar
+					ratio={postVotes?.ratio}
+					troughClassName={"w-full h-6 bg-cinna rounded-2xl"}
+					barClassName={"h-6 bg-cyan-500 rounded-2xl"}
+				/>
+			</div >
 
-						<div
-							className={"flex items-center gap-1 justify-center text-cinna"}
-							onClick={() => { userVote("no") }}>
-							{postVotes?.uservote?.vote === "no"
-								? <div className={"h-5 aspect-square cursor-pointer rounded-full ring-2 ring-cinna bg-cinna"}></div>
-								: <div className={"h-5 aspect-square cursor-pointer rounded-full ring-2 ring-cinna hover:bg-cinna shadow-2xl shadow-cinna"}></div>
-							}
-						</div>
-						<ProgressBar ratio={postVotes?.ratio} troughClassName={"w-full h-6 bg-cinna rounded-2xl"} barClassName={"h-6 bg-cyan-500 rounded-2xl"} />
-					</div>
-					<div className={"text-cinna"}>{errorMessage}</div>
-				</div>
-				: <div className={"w-full flex flex-col items-center"}>
-					<div>Voting for this prediction has closed</div>
-					<ProgressBar ratio={postVotes?.ratio} troughClassName={"w-full h-6 bg-cinna rounded-2xl"} barClassName={"h-6 bg-cyan-500 rounded-2xl"} />
-				</div>
-			}
 		</>
 	)
 }

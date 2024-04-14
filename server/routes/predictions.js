@@ -31,6 +31,7 @@ router.get('/getConfirmedByUser/:username', async (req, res) => {
 	const username = req.params.username
 	try {
 		const data = await PredictionModel.find({"author": username, "authorPredictionConfirmed": null})
+		console.log(data)
 		res.json(data)
 	}
 	catch (error) {
@@ -118,10 +119,10 @@ router.post('/getOne/:id/votes', async (req, res) => {
 		let down = 0;
 		let userVote = votes.find(item => item.username === username)
 		for (let i of votes) {
-			if (i.vote === "no") {
+			if (i.vote === false) {
 				down += 1
 			}
-			if (i.vote === "yes") {
+			if (i.vote === true) {
 				up += 1
 			}
 		}

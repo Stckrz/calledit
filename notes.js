@@ -33,3 +33,11 @@
 // Common Components:
 // XX--Add a dropdown component that takes props: an array of options, as well as a callback setstate function.
 
+
+//sooo i want one component to be a feed of predictions.. no matter how they are rendered. so far, we have
+//--all predictions - home page - this needs to be sortable by category..
+//--user profile predictions - ones created by the user AND ones which the user has voted on
+//--user dashboard predictions - ones that the user needs to confirm, and past predictions that the user has made
+//
+	
+})
