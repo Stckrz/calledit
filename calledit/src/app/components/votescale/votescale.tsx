@@ -58,13 +58,13 @@ const VoteScale: React.FC<VoteScaleProps> = ({ votes, id, prediction }) => {
 					{!prediction.completed
 						&& <ThisOrThat callback={userVote} value={postVotes?.uservote?.vote} />
 					}
-					<div>{errorMessage}</div>
 					<ProgressBar
 						ratio={postVotes?.ratio}
-						troughClassName={"w-full h-6 bg-cinna rounded-2xl"}
-						barClassName={"h-6 bg-cyan-500 rounded-2xl"}
+						troughClassName={"w-full h-6 bg-cinna rounded"}
+						barClassName={"h-6 bg-cyan-500 rounded"}
 					/>
 				</div >
+					<div className={"text-cinna"}>{errorMessage}</div>
 				<div className={"flex justify-center"}>{prediction.completed && "Voting for this prediction has ended"}</div>
 			</div>
 		</>

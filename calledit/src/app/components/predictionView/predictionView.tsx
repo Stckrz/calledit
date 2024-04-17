@@ -27,10 +27,10 @@ const Prediction: React.FC<PredictionProps> = ({ item, mode }) => {
 			authorPredictionConfirmed: result
 		}
 		item._id &&
-			console.log("data", updatedData)
-			console.log("user token",cookie.userInfo.token)
-			console.log("item id", item._id)
 			updatePrediction(updatedData, item._id, cookie.userInfo?.token)
+			for(let user of item.votes){
+			console.log(user)
+		}
 	}
 
 	const modeMarkup = (mode: Mode) => {
@@ -46,17 +46,16 @@ const Prediction: React.FC<PredictionProps> = ({ item, mode }) => {
 				)
 		}
 	}
-
 	return (
 		<>
 			<div className={"flex flex-col items-start justify-center gap-1 p-6 m-1 border border-gray-200 rounded-md shadow-lg shadow-gray-400 bg-gray-100"}>
 				<div className={"w-full"}>
 					<div className={"flex justify-between items-center w-full font-semibold"}>
-						<div>{item.title}</div>
+						<div className={"text-xl"}>{item.title}</div>
 						<Link href={`/user/profile/${item.author}`}><div>{item.author}</div></Link>
 					</div>
-					<div>{item.category}</div>
-					<div className={"border p-1 border-gray-300 w-full rounded"}>{item.description}</div>
+					<div className={"text-sm"}>{item.category}</div>
+					<div className={"border p-1 m-2 border-gray-300 w-full rounded"}>{item.description}</div>
 				</div>
 				<div className={"flex items-center justify-center gap-2 w-full"}>
 					{item.created_on && item.finished_on &&

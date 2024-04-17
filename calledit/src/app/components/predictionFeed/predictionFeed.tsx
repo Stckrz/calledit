@@ -1,13 +1,16 @@
 'use client'
 import React, { useState, useEffect } from 'react';
 import { getPredictions, getPredictionsByCategory, getConfirmedByUser } from '@/app/library/api/predictionfetch';
-import { IPrediction } from '@/app/models/predictionmodels';
-import Prediction, { Mode } from '@components/predictionView/predictionView';
 import { getPredictionsByUsername, getPredictionsVotedByUsername } from '@/app/library/api/userfetch';
-import { useCookies } from 'react-cookie';
+import { IPrediction } from '@/app/models/predictionmodels';
+import { categoryArray } from '@/app/library/objects/categoryArray';
+import Prediction, { Mode } from '@components/predictionView/predictionView';
+import CategoryPicker from '../categoryPicker/categoryPicker';
+import Dropdown from '../common/dropdown/dropdown';
 
 export enum FeedType {
 	Normal,
+	UserFeed,
 	ConfirmPrediction
 }
 
@@ -17,73 +20,87 @@ interface PredictionFeedProps {
 	feedType: FeedType
 }
 
-const PredictionFeed: React.FC<PredictionFeedProps> = ({ username = "", modifier, feedType }) => {
+const PredictionFeed: React.FC<PredictionFeedProps> = ({ username = "", feedType = FeedType.Normal }) => {
+	const [category, setCategory] = useState<string>("All");
 	const [predictionArray, setPredictionArray] = useState<IPrediction[]>([])
 
+	async function setConfirmedPredictionFeed() {
+		const tempArr = []
+		const arr = await getConfirmedByUser(username)
+		for (let i of arr) {
+			i.completed && i.authorPredictionConfirmed === null &&
+				tempArr.push(i)
+		}
+		setPredictionArray(tempArr)
+	}
 
 	async function predictionFetch() {
 		if (feedType === FeedType.ConfirmPrediction) {
-			const tempArr = []
-			const arr = await getConfirmedByUser(username)
-			for (let i of arr) {
-				i.completed && i.authorPredictionConfirmed === null &&
-					tempArr.push(i)
-			}
-			console.log(tempArr)
-			setPredictionArray(tempArr)
-		} else {
-
+			setConfirmedPredictionFeed()
+		} else if (feedType === FeedType.UserFeed) {
 			if (username) {
-				if (modifier === "votes") {
+				if (category === "votes") {
 					const arr = await getPredictionsVotedByUsername(username)
 					setPredictionArray(arr.reverse())
 				}
-				else if (modifier === "userposts") {
+				else if (category === "userposts") {
 					const arr = await getPredictionsByUsername(username)
 					setPredictionArray(arr.reverse())
 				} else {
 					const arr = await getPredictionsByUsername(username)
 					setPredictionArray(arr.reverse())
 				}
-			} else {
-				if (modifier) {
-					if (modifier === "All") {
-						const arr = await getPredictions()
-						setPredictionArray(arr.reverse())
-					} else {
-						const arr = await getPredictionsByCategory(modifier)
-						setPredictionArray(arr.reverse())
-					}
-				}
 			}
+		} else if (feedType === FeedType.Normal) {
+			if (category === "All") {
+				const arr = await getPredictions()
+				setPredictionArray(arr.reverse())
+			} else {
+				const arr = await getPredictionsByCategory(category)
+				setPredictionArray(arr.reverse())
+			}
+		}
+	}
+
+	const categoryMarkup = (feedType: FeedType) => {
+		switch (feedType) {
+			case FeedType.Normal:
+				return (
+					<CategoryPicker setCategory={setCategory} categories={categoryArray}/>
+				)
+			case FeedType.UserFeed:
+				return (
+					<Dropdown callback={setCategory} options={["votes", "userposts"]}/>
+				)
+			case FeedType.ConfirmPrediction:
+				return (
+				<div></div>
+				)
 		}
 	}
 
 	useEffect(() => {
 		predictionFetch()
-	}, [modifier])
+	}, [category])
 
 	return (
 		<>
-			<div className={"flex flex-col gap-2 w-3/4 self-center"}>
-				{/* {username && */}
-				{/* 	<div className={"flex"}> */}
-				{/* 		<button className={"btn-primary"} onClick={() => { setFeedType("userposts") }}>posts by user</button> */}
-				{/* 		<button className={"btn-primary"} onClick={() => { setFeedType("votes") }}>posts user voted on</button> */}
-				{/* 	</div> */}
-				{/* } */}
-				{predictionArray?.length > 0 &&
+			<div className={"flex flex-col gap-2 w-1/2 self-center"}>
+				{categoryMarkup(feedType)}
+				{predictionArray?.length > 0 ?
 					predictionArray.map((item) => {
 						return (
 							<Prediction
 								key={item._id}
 								item={item}
-								mode={feedType === FeedType.Normal ? Mode.Voting : Mode.Confirming} />
+								mode={feedType === FeedType.ConfirmPrediction ? Mode.Confirming : Mode.Voting} />
 						)
 					})
+					:<div>Nothing to show...</div>
 				}
 			</div>
 		</>
 	)
 }
+
 export default PredictionFeed

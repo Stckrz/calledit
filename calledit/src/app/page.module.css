@@ -1,9 +1,10 @@
 .main {
 	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
+	/* flex-direction: column; */
+	flex-direction: row;
+	/* justify-content: space-between; */
 	align-items: center;
-	padding: 4rem;
+	/* padding: 4rem; */
 }
 
 .description {

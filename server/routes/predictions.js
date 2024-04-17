@@ -6,7 +6,7 @@ const { isLoggedIn } = require("../middleware/middleware");
 //get all blogposts
 router.get('/getAll', async (req, res) => {
 	try {
-		const data = await PredictionModel.find()
+		const data = await PredictionModel.find().sort({completed: -1, finished_on: -1})
 		res.json(data)
 	}
 	catch (error) {
@@ -18,7 +18,7 @@ router.get('/getAll', async (req, res) => {
 router.get('/getByUser/:username', async (req, res) => {
 	const username = req.params.username
 	try {
-		const data = await PredictionModel.find({"author": username})
+		const data = await PredictionModel.find({"author": username}).sort({completed: -1, finished_on: -1})
 		res.json(data)
 	}
 	catch (error) {

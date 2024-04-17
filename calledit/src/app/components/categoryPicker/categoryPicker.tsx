@@ -2,17 +2,18 @@ import React, { SetStateAction } from 'react';
 import { categoryArray } from '@/app/library/objects/categoryArray';
 
 interface CategoryPickerProps {
-	setCategory: React.Dispatch<SetStateAction<string>>
+	setCategory: React.Dispatch<SetStateAction<string>>,
+	categories: string[]
 }
 
-const CategoryPicker: React.FC<CategoryPickerProps> = ({ setCategory }) => {
+const CategoryPicker: React.FC<CategoryPickerProps> = ({ setCategory, categories=[] }) => {
 	return (
 		<>
-			<div className={"flex flex-col w-3/4"}>
-				<div className={"flex items-center justify-evenly border bg-cyan-500 relative rounded"}>
-					{categoryArray.map((item) => {
+			<div className={"flex h-full w-full bg-cyan-500 rounded"}>
+				<div className={"flex items-center w-full justify-evenly"}>
+					{categories.map((item) => {
 						return (
-							<div className={"cursor-pointer"} key={item} onClick={() => { setCategory(item) }}>{item}</div>
+							<div className={"cursor-pointer hover:bg-cyan-700 w-full flex items-center justify-center p-1"} key={item} onClick={() => { setCategory(item) }}>{item}</div>
 						)
 					})
 					}
