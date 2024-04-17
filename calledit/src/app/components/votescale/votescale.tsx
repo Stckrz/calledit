@@ -24,6 +24,7 @@ const VoteScale: React.FC<VoteScaleProps> = ({ votes, id, prediction }) => {
 			if (!postVotes?.uservote) {
 				let obj = {
 					username: cookie.userInfo.username,
+					id: cookie.userInfo.id,
 					vote: vote
 				}
 				updatePrediction({ votes: [...votes, obj] }, id, cookie.userInfo.token)

@@ -22,5 +22,6 @@ export interface IVotesObject {
 
 export interface IUserVote {
 	username: string,
+	id: string,
 	vote: boolean
 }
