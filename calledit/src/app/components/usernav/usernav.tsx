@@ -1,8 +1,8 @@
 'use client'
 import React, { useEffect } from 'react';
 import Link from "next/link";
-import { FaRegUser } from "react-icons/fa";
 import { useCookies } from "react-cookie";
+import UserIcon from '../userIcon/userIcon';
 
 const UserNav: React.FC = () => {
 	const [cookie, setCookie, removeCookie] = useCookies(['userInfo'])
@@ -26,18 +26,17 @@ const UserNav: React.FC = () => {
 					</div>
 					: <div className={"flex gap-3"}>
 						<div className={"flex font-semibold items-center justify-center"}>
-						<Link href="/user/dashboard">
+							<Link href="/user/dashboard">
 								<div className={"flex items-center justify-center font-semibold"}>
-							<FaRegUser />
-							{cookie.userInfo.username}
-							</div>
-						</Link>
+									<UserIcon username={cookie.userInfo.username} />
+								</div>
+							</Link>
 						</div>
 						<div>
 							<Link href="/user/logout">
 								<div
 									className={"w-20 flex items-center justify-center btn-primary bg-transparent border border-white p-2"}
-									onClick={() => { removeCookie('userInfo',{path:'/'}) }}>
+									onClick={() => { removeCookie('userInfo', { path: '/' }) }}>
 									Logout
 								</div>
 							</Link>

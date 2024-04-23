@@ -38,10 +38,10 @@ const PredictionSchema = new mongoose.Schema({
 		type: Array,
 		required: false
 	},
-	completed: {
-		type: Boolean,
-		default: function() {return this.finished_on < Date.now()},
-	},
+	// completed: {
+	// 	type: Boolean,
+	// 	default: function() {return this.finished_on < Date.now()},
+	// },
 	authorPredictionConfirmed: {
 		type: Boolean,
 		default: null,

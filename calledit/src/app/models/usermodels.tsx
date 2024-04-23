@@ -15,6 +15,7 @@ export interface IUser {
 	score: number,
 	predictions: any[],
 	roles: string[],
+	rank: string,
 }
 
 export const iUserInitial = {
@@ -23,5 +24,6 @@ export const iUserInitial = {
 	score: 0,
 	predictions: [],
 	roles: [],
+	rank: ""
 }
 

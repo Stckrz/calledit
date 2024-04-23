@@ -29,7 +29,8 @@ router.get('/find/:username', async (req, res) => {
 			_id: user._id,
 			score: user.score,
 			predictions: user.predictions,
-			roles: user.roles
+			roles: user.roles,
+			rank: user.rank
 		})
 	}
 	catch (error) {

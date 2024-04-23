@@ -1,15 +1,18 @@
-export interface IPrediction {
+export interface IApiPrediction {
 	title: string,
 	category: string
 	description: string,
 	author: string,
-	finished_on?: string,
+	finished_on: string,
 	created_on?: string,
 	votes: IUserVote[],
 	comments?: any[],
-	completed: boolean,
 	authorPredictionConfirmed: boolean,
 	_id?: string,
+}
+
+export interface IPrediction extends IApiPrediction{
+	completed: boolean
 }
 
 export interface IVotesObject {

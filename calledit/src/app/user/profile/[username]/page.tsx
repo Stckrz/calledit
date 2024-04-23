@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { getUserByUsername } from '@/app/library/api/userfetch';
 import { IUser, iUserInitial } from '@/app/models/usermodels';
 import PredictionFeed, { FeedType } from '@/app/components/predictionFeed/predictionFeed';
+import UserStats from '@components/userstats/userstats';
 
 interface UserProfileProps {
 	params: {
@@ -26,13 +27,9 @@ const UserProfile: React.FC<UserProfileProps> = (params) => {
 		<>
 			<div className={"h-full w-full flex items-center justify-center border-cinna"}>
 				{user.username ?
-					<div className={"flex flex-col w-full md:w-1/2 lg:w-3/4 h-full"}>
-						<div className={"w-full flex justify-between"}>
-							<div>{`${user.username}'s Profile`}</div>
-							<div>{user.score}</div>
-							
-						</div>
-						<div className={"flex flex-col"}>
+					<div className={"flex justify-between w-full h-full overflow-auto"}>
+						<UserStats user={user}/>
+						<div className={"flex flex-col flex-grow"}>
 							<PredictionFeed username={username} feedType={FeedType.UserFeed}/>
 						</div>
 					</div>

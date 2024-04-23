@@ -46,7 +46,10 @@ const Prediction: React.FC<PredictionProps> = ({ item, mode }) => {
 				)
 			case Mode.Confirming:
 				return (
-					<ThisOrThat callback={updatePredictionResult} />
+					<div>
+						<div>Did this happen?</div>
+						<ThisOrThat callback={updatePredictionResult} />
+					</div>
 				)
 		}
 	}

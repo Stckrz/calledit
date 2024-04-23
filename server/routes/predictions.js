@@ -6,7 +6,7 @@ const { isLoggedIn } = require("../middleware/middleware");
 //get all blogposts
 router.get('/getAll', async (req, res) => {
 	try {
-		const data = await PredictionModel.find().sort({completed: -1, finished_on: -1})
+		const data = await PredictionModel.find().sort({finished_on: 1 })
 		res.json(data)
 	}
 	catch (error) {
@@ -18,7 +18,7 @@ router.get('/getAll', async (req, res) => {
 router.get('/getByUser/:username', async (req, res) => {
 	const username = req.params.username
 	try {
-		const data = await PredictionModel.find({"author": username}).sort({completed: -1, finished_on: -1})
+		const data = await PredictionModel.find({ "author": username }).sort({ finished_on: -1 })
 		res.json(data)
 	}
 	catch (error) {
@@ -30,7 +30,7 @@ router.get('/getByUser/:username', async (req, res) => {
 router.get('/getConfirmedByUser/:username', async (req, res) => {
 	const username = req.params.username
 	try {
-		const data = await PredictionModel.find({"author": username, "authorPredictionConfirmed": null})
+		const data = await PredictionModel.find({ "author": username, "authorPredictionConfirmed": null })
 		console.log(data)
 		res.json(data)
 	}
@@ -43,7 +43,7 @@ router.get('/getConfirmedByUser/:username', async (req, res) => {
 router.get('/getVotedByUser/:username', async (req, res) => {
 	const username = req.params.username
 	try {
-		const data = await PredictionModel.find({"votes": {$elemMatch: {"username": username}}})
+		const data = await PredictionModel.find({ "votes": { $elemMatch: { "username": username } } })
 		res.json(data)
 	}
 	catch (error) {
@@ -55,7 +55,7 @@ router.get('/getVotedByUser/:username', async (req, res) => {
 router.get('/getByCategory/:category', async (req, res) => {
 	const category = req.params.category
 	try {
-		const data = await PredictionModel.find({"category": category})
+		const data = await PredictionModel.find({ "category": category })
 		res.json(data)
 	}
 	catch (error) {
@@ -76,7 +76,6 @@ router.delete('/deleteAll', async (req, res) => {
 
 //post a new prediction
 router.post('/post', isLoggedIn, async (req, res) => {
-	// router.post('/post', async (req, res) => {
 	const { username } = req.user;
 	req.body.username = username;
 	const data = new PredictionModel({

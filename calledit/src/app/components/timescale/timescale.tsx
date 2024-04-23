@@ -36,12 +36,13 @@ const TimeScale: React.FC<TimeScaleProps> = ({ title, timeCreated, timeFinished,
 		<>
 			<div className={"flex flex-col w-full"}>
 				{!completed
-					&& <div>
+					? <div>
 						<ProgressBar ratio={timeProgress} />
 						<div>
 							<div><Timer dateCompleted={finishedDate} /></div>
 						</div>
 					</div>
+					:<div>Timer completed</div>
 				}
 			</div>
 		</>

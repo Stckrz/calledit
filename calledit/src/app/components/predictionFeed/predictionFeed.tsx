@@ -1,6 +1,6 @@
 'use client'
 import React, { useState, useEffect } from 'react';
-import { getPredictions, getPredictionsByCategory, getConfirmedByUser } from '@/app/library/api/predictionfetch';
+import { getPredictions } from '@/app/library/api/predictionfetch';
 import { getPredictionsByUsername, getPredictionsVotedByUsername } from '@/app/library/api/userfetch';
 import { IPrediction } from '@/app/models/predictionmodels';
 import { categoryArray } from '@/app/library/objects/categoryArray';
@@ -26,7 +26,8 @@ const PredictionFeed: React.FC<PredictionFeedProps> = ({ username = "", feedType
 
 	async function setConfirmedPredictionFeed() {
 		const tempArr = []
-		const arr = await getConfirmedByUser(username)
+		let arr: IPrediction[] = []
+		arr = await getPredictions({ username: username })
 		for (let i of arr) {
 			i.completed && i.authorPredictionConfirmed === null &&
 				tempArr.push(i)
@@ -53,11 +54,11 @@ const PredictionFeed: React.FC<PredictionFeedProps> = ({ username = "", feedType
 			}
 		} else if (feedType === FeedType.Normal) {
 			if (category === "All") {
-				const arr = await getPredictions()
-				setPredictionArray(arr.reverse())
+				const arr = await getPredictions({})
+				setPredictionArray(arr)
 			} else {
-				const arr = await getPredictionsByCategory(category)
-				setPredictionArray(arr.reverse())
+				const arr = await getPredictions({ category: category })
+				setPredictionArray(arr)
 			}
 		}
 	}
@@ -66,15 +67,15 @@ const PredictionFeed: React.FC<PredictionFeedProps> = ({ username = "", feedType
 		switch (feedType) {
 			case FeedType.Normal:
 				return (
-					<CategoryPicker setCategory={setCategory} categories={categoryArray}/>
+					<CategoryPicker setCategory={setCategory} categories={categoryArray} />
 				)
 			case FeedType.UserFeed:
 				return (
-					<Dropdown callback={setCategory} options={["votes", "userposts"]}/>
+					<Dropdown callback={setCategory} options={["votes", "userposts"]} />
 				)
 			case FeedType.ConfirmPrediction:
 				return (
-				<div></div>
+					<div></div>
 				)
 		}
 	}
@@ -96,7 +97,7 @@ const PredictionFeed: React.FC<PredictionFeedProps> = ({ username = "", feedType
 								mode={feedType === FeedType.ConfirmPrediction ? Mode.Confirming : Mode.Voting} />
 						)
 					})
-					:<div>Nothing to show...</div>
+					: <div>Nothing to show...</div>
 				}
 			</div>
 		</>
