@@ -19,7 +19,7 @@ const Pagination: React.FC<PaginationProps> = ({ setPage, page, entryCount, entr
 			<div className={"flex items-center justify-end h-full"}>
 				<div className={"flex items-center justify-center bg-gray-100 rounded select-none"}>
 					<div
-						className={"flex items-center justify-center m-0.5 rounded bg-cyan-500 px-1 cursor-pointer"}
+						className={"flex items-center justify-center m-0.5 rounded bg-cyan-500 px-1 cursor-pointer hover:bg-cyan-700"}
 						onClick={() => { page > 1 && setPage(page - 1) }}
 					>
 						{"<"}
@@ -29,7 +29,7 @@ const Pagination: React.FC<PaginationProps> = ({ setPage, page, entryCount, entr
 							return (
 								<div
 									key={page}
-									className={"flex items-center justify-center h-1/2 m-0.5 rounded bg-cyan-500 px-1 cursor-pointer"}
+									className={"flex items-center justify-center h-1/2 m-0.5 rounded bg-cyan-500 px-2 cursor-pointer hover:bg-cyan-700"}
 									onClick={() => { setPage(page) }}>
 									{page}
 								</div>
@@ -37,7 +37,7 @@ const Pagination: React.FC<PaginationProps> = ({ setPage, page, entryCount, entr
 						})
 					}
 					<div
-						className={"flex items-center justify-center h-1/2 m-0.5 rounded bg-cyan-500 px-1 cursor-pointer"}
+						className={"flex items-center justify-center h-1/2 m-0.5 rounded bg-cyan-500 px-1 cursor-pointer hover:bg-cyan-700"}
 						onClick={() => { page < pages && setPage(page + 1) }}
 					>
 						{">"}
