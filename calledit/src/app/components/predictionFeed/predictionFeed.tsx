@@ -1,12 +1,13 @@
 'use client'
 import React, { useState, useEffect } from 'react';
-import { getPredictions } from '@/app/library/api/predictionfetch';
+import { getPredictions, predictionReturnObject } from '@/app/library/api/predictionfetch';
 import { getPredictionsByUsername, getPredictionsVotedByUsername } from '@/app/library/api/userfetch';
 import { IPrediction } from '@/app/models/predictionmodels';
 import { categoryArray } from '@/app/library/objects/categoryArray';
 import Prediction, { Mode } from '@components/predictionView/predictionView';
-import CategoryPicker from '../categoryPicker/categoryPicker';
-import Dropdown from '../common/dropdown/dropdown';
+import CategoryPicker from '@components/categoryPicker/categoryPicker';
+import Dropdown from '@components/common/dropdown/dropdown';
+import Pagination from '@components/common/pagination/pagination';
 
 export enum FeedType {
 	Normal,
@@ -22,17 +23,22 @@ interface PredictionFeedProps {
 
 const PredictionFeed: React.FC<PredictionFeedProps> = ({ username = "", feedType = FeedType.Normal }) => {
 	const [category, setCategory] = useState<string>("All");
-	const [predictionArray, setPredictionArray] = useState<IPrediction[]>([])
+	const [predictionArray, setPredictionArray] = useState<IPrediction[]>([]);
+	const [feedPage, setFeedPage] = useState(1);
+	const [predictionCount, setPredictionCount] = useState(0);
 
 	async function setConfirmedPredictionFeed() {
-		const tempArr = []
-		let arr: IPrediction[] = []
-		arr = await getPredictions({ username: username })
-		for (let i of arr) {
+		const tempPredictionArray = []
+		let predictionObject: predictionReturnObject = { predictions: [], count: 0 }
+		predictionObject = await getPredictions({ username: username })
+
+		for (let i of predictionObject.predictions) {
 			i.completed && i.authorPredictionConfirmed === null &&
-				tempArr.push(i)
+				tempPredictionArray.push(i)
 		}
-		setPredictionArray(tempArr)
+
+		setPredictionArray(tempPredictionArray)
+		setPredictionCount(predictionObject.count)
 	}
 
 	async function predictionFetch() {
@@ -41,24 +47,29 @@ const PredictionFeed: React.FC<PredictionFeedProps> = ({ username = "", feedType
 		} else if (feedType === FeedType.UserFeed) {
 			if (username) {
 				if (category === "votes") {
-					const arr = await getPredictionsVotedByUsername(username)
-					setPredictionArray(arr.reverse())
+					const predictionObject = await getPredictionsVotedByUsername(username)
+					setPredictionArray(predictionObject?.predictions)
+					setPredictionCount(predictionObject?.count)
 				}
 				else if (category === "userposts") {
-					const arr = await getPredictionsByUsername(username)
-					setPredictionArray(arr.reverse())
+					const predictionObject = await getPredictionsByUsername(username)
+					setPredictionArray(predictionObject?.predictions)
+					setPredictionCount(predictionObject?.count)
 				} else {
-					const arr = await getPredictionsByUsername(username)
-					setPredictionArray(arr.reverse())
+					const predictionObject = await getPredictionsByUsername(username)
+					setPredictionArray(predictionObject?.predictions)
+					setPredictionCount(predictionObject?.count)
 				}
 			}
 		} else if (feedType === FeedType.Normal) {
 			if (category === "All") {
-				const arr = await getPredictions({})
-				setPredictionArray(arr)
+				const predictionObject = await getPredictions({ page: feedPage })
+				setPredictionArray(predictionObject.predictions)
+				setPredictionCount(predictionObject.count)
 			} else {
-				const arr = await getPredictions({ category: category })
-				setPredictionArray(arr)
+				const predictionObject = await getPredictions({ category: category, page: feedPage })
+				setPredictionArray(predictionObject.predictions)
+				setPredictionCount(predictionObject.count)
 			}
 		}
 	}
@@ -82,21 +93,25 @@ const PredictionFeed: React.FC<PredictionFeedProps> = ({ username = "", feedType
 
 	useEffect(() => {
 		predictionFetch()
-	}, [category])
+	}, [category, feedPage])
 
 	return (
 		<>
 			<div className={"flex flex-col gap-2 w-1/2 self-center"}>
 				{categoryMarkup(feedType)}
-				{predictionArray?.length > 0 ?
-					predictionArray.map((item) => {
-						return (
-							<Prediction
-								key={item._id}
-								item={item}
-								mode={feedType === FeedType.ConfirmPrediction ? Mode.Confirming : Mode.Voting} />
-						)
-					})
+				{predictionArray?.length > 0
+					? <div className={"flex flex-col gap-2"}>
+						<Pagination setPage={setFeedPage} page={feedPage} entryCount={predictionCount} entryLimit={10} />
+						{predictionArray.map((item) => {
+							return (
+								<Prediction
+									key={item._id}
+									item={item}
+									mode={feedType === FeedType.ConfirmPrediction ? Mode.Confirming : Mode.Voting} />
+							)
+						})
+						}
+					</div>
 					: <div>Nothing to show...</div>
 				}
 			</div>

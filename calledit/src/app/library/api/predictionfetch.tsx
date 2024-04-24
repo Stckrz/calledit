@@ -4,31 +4,43 @@ import { typeConversion } from "./fetchCommon"
 interface predictionParamObject {
 	id?: string,
 	category?: string,
-	username?: string
+	username?: string,
+	page?: number
+}
+export interface predictionReturnObject {
+	predictions: IPrediction[],
+	count: number
 }
 
 //get all predictions
 export async function getPredictions(input: predictionParamObject) {
-	let newData: IPrediction[] = []
+	let page;
+	if (input.page) {
+		page = input.page
+	} else {
+		page = 1
+	}
+
+	let newData: predictionReturnObject = { predictions: [], count: 0 }
 	try {
 		if (input.id) {
 			const response = await fetch(`http://localhost:5000/predictions/getOne/${input.id}`)
 			newData = await response.json()
 
 		} else if (input.category) {
-			const response = await fetch(`http://localhost:5000/predictions/getByCategory/${input.category}`)
+			const response = await fetch(`http://localhost:5000/predictions/getByCategory/${input.category}?page=${page}`)
 			const data = await response.json()
-			newData = typeConversion(data)
+			newData = { predictions: typeConversion(data.data), count: data.total }
 
 		} else if (input.username) {
-			const response = await fetch(`http://localhost:5000/predictions/getConfirmedByUser/${input.username}`)
+			const response = await fetch(`http://localhost:5000/predictions/getConfirmedByUser/${input.username}?page=${page}`)
 			const data = await response.json()
-			newData = typeConversion(data)
+			newData = { predictions: typeConversion(data.data), count: data.total }
 
 		} else {
-			const response = await fetch('http://localhost:5000/predictions/getAll')
+			const response = await fetch(`http://localhost:5000/predictions/getAll?page=${page}`)
 			const data = await response.json()
-			newData = typeConversion(data)
+			newData = { predictions: typeConversion(data.data), count: data.total }
 		}
 	}
 	catch (error) { console.log(error) }

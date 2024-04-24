@@ -14,7 +14,7 @@ const UserIcon: React.FC<UserIconProps> = ({ username }) => {
 	async function setConfirmedPredictionFeed() {
 		let tempCount = 0
 		const arr = await getPredictions({ username: username })
-		for (let i of arr) {
+		for (let i of arr.predictions) {
 			if(i.completed && i.authorPredictionConfirmed === null){
 				tempCount += 1;
 			}

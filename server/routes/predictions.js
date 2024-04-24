@@ -3,11 +3,22 @@ const router = express.Router()
 const PredictionModel = require('../models/prediction');
 const { isLoggedIn } = require("../middleware/middleware");
 
+const pageHandler = (pageNumber) => {
+	const limit = 10;
+	let skip;
+}
+
 //get all blogposts
 router.get('/getAll', async (req, res) => {
+	let page = req.query.page;
+	const limit = 10;
+	let skip
+	skip = (page - 1) * limit;
+
 	try {
-		const data = await PredictionModel.find().sort({finished_on: 1 })
-		res.json(data)
+		const total = await PredictionModel.countDocuments({});
+		const data = await PredictionModel.find().skip(skip).limit(limit).sort({ finished_on: -1 })
+		res.json({ data, total })
 	}
 	catch (error) {
 		res.status(500).json({ message: error.message })
@@ -17,9 +28,16 @@ router.get('/getAll', async (req, res) => {
 //gets all predictions made by a specific user
 router.get('/getByUser/:username', async (req, res) => {
 	const username = req.params.username
+
+	let page = req.query.page;
+	const limit = 10;
+	let skip;
+	skip = (page - 1) * limit;
+
 	try {
-		const data = await PredictionModel.find({ "author": username }).sort({ finished_on: -1 })
-		res.json(data)
+		const total = await PredictionModel.countDocuments({"author": username})
+		const data = await PredictionModel.find({ "author": username }).skip(skip).limit(limit).sort({ finished_on: -1 })
+		res.json({ data, total })
 	}
 	catch (error) {
 		res.status(500).json({ message: error.message })
@@ -29,10 +47,16 @@ router.get('/getByUser/:username', async (req, res) => {
 //gets all predictions made by a specific user that have not yet been confirmed.
 router.get('/getConfirmedByUser/:username', async (req, res) => {
 	const username = req.params.username
+
+	let page = req.query.page;
+	const limit = 10;
+	let skip;
+	skip = (page - 1) * limit;
+
 	try {
-		const data = await PredictionModel.find({ "author": username, "authorPredictionConfirmed": null })
-		console.log(data)
-		res.json(data)
+		const total = await PredictionModel.countDocuments({ "author": username, "authorPredictionConfirmed": null })
+		const data = await PredictionModel.find({ "author": username, "authorPredictionConfirmed": null }).skip(skip).limit(limit)
+		res.json({ data, total })
 	}
 	catch (error) {
 		res.status(500).json({ message: error.message })
@@ -42,9 +66,16 @@ router.get('/getConfirmedByUser/:username', async (req, res) => {
 //gets all predictions a user has voted on..
 router.get('/getVotedByUser/:username', async (req, res) => {
 	const username = req.params.username
+
+	let page = req.query.page;
+	const limit = 10;
+	let skip;
+	skip = (page - 1) * limit;
+
 	try {
-		const data = await PredictionModel.find({ "votes": { $elemMatch: { "username": username } } })
-		res.json(data)
+		const total = await PredictionModel.countDocuments({ "votes": { $elemMatch: { "username": username } } })
+		const data = await PredictionModel.find({ "votes": { $elemMatch: { "username": username } } }).skip(skip).limit(limit)
+		res.json({ data, total })
 	}
 	catch (error) {
 		res.status(500).json({ message: error.message })
@@ -54,9 +85,16 @@ router.get('/getVotedByUser/:username', async (req, res) => {
 //gets all predictions by category name
 router.get('/getByCategory/:category', async (req, res) => {
 	const category = req.params.category
+
+	let page = req.query.page;
+	const limit = 10;
+	let skip;
+	skip = (page - 1) * limit;
+
 	try {
-		const data = await PredictionModel.find({ "category": category })
-		res.json(data)
+		const total = await PredictionModel.countDocuments({ "category": category })
+		const data = await PredictionModel.find({ "category": category }).skip(skip).limit(limit)
+		res.json({ data, total })
 	}
 	catch (error) {
 		res.status(500).json({ message: error.message })
@@ -108,6 +146,7 @@ router.get('/getOne/:id', async (req, res) => {
 	}
 })
 
+//get the vote information for a single prediction by id
 router.post('/getOne/:id/votes', async (req, res) => {
 	const id = req.params.id;
 	const username = req.body.username;
@@ -170,7 +209,5 @@ router.delete('/delete/:id', isLoggedIn, async (req, res) => {
 		res.status(400).json({ message: error.message })
 	}
 })
-
-
 
 module.exports = router;

@@ -34,8 +34,8 @@ export async function userLogin(login: ILogin) {
 }
 
 //updates a user
-export async function userUpdate(id: string, updatedData: Partial<IUser>){
-	try{
+export async function userUpdate(id: string, updatedData: Partial<IUser>) {
+	try {
 		const response = await fetch(`http://localhost:5000/users/update/${id}`, {
 			headers: { "Content-Type": "application/json" },
 			method: 'PATCH',
@@ -49,8 +49,8 @@ export async function userUpdate(id: string, updatedData: Partial<IUser>){
 }
 
 //increments a users score by 1
-export async function userScoreIncrement(id: string){
-	try{
+export async function userScoreIncrement(id: string) {
+	try {
 		const response = await fetch(`http://localhost:5000/users/incrementScore/${id}`, {
 			headers: { "Content-Type": "application/json" },
 			method: 'PATCH',
@@ -63,31 +63,33 @@ export async function userScoreIncrement(id: string){
 }
 
 //fetches a single user by username
-export async function getUserByUsername(username: string){
-	try{
+export async function getUserByUsername(username: string) {
+	try {
 		const response = await fetch(`http://localhost:5000/users/find/${username}`)
 		const data = await response.json()
 		return data
 	}
-	catch (error) {console.log(error)}
+	catch (error) { console.log(error) }
 }
 
 //gets all predictions that a user has made
-export async function getPredictionsByUsername(username: string){
-	try{
-		const response = await fetch(`http://localhost:5000/predictions/getByUser/${username}`)
-		const data = await response.json()
-		return data
-	}
-	catch (error) {console.log(error)}
+export async function getPredictionsByUsername(username: string, page: number = 1) {
+
+try {
+	const response = await fetch(`http://localhost:5000/predictions/getByUser/${username}?page=${page}`)
+	const data = await response.json()
+	return { predictions: data.data, count: data.total }
+}
+catch (error) { console.log(error) }
 }
 
 //gets all predictions a user has voted on
-export async function getPredictionsVotedByUsername(username: string){
-	try{
-		const response = await fetch(`http://localhost:5000/predictions/getVotedByUser/${username}`)
+export async function getPredictionsVotedByUsername(username: string, page: number = 1) {
+	try {
+		const response = await fetch(`http://localhost:5000/predictions/getVotedByUser/${username}?page=${page}`)
 		const data = await response.json()
-		return data
+		console.log(data)
+		return { predictions: data.data, count: data.total }
 	}
-	catch (error) {console.log(error)}
+	catch (error) { console.log(error) }
 }
