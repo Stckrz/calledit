@@ -4,6 +4,7 @@ import VoteScale from '../votescale/votescale';
 import TimeScale from '../timescale/timescale';
 import Link from 'next/link';
 import ThisOrThat from '../common/thisOrThat/thisOrThat';
+import CommentFeed from '../commentfeed/commentfeed';
 import { updatePrediction } from '@/app/library/api/predictionfetch';
 import { useCookies } from 'react-cookie';
 import { userScoreIncrement } from '@/app/library/api/userfetch';
@@ -72,7 +73,15 @@ const Prediction: React.FC<PredictionProps> = ({ item, mode }) => {
 				</div>
 				{modeMarkup(mode)}
 
-				<div>{item.comments}</div>
+				<div>
+				{item.comments}
+					{item._id &&
+						<div>ass
+						<CommentFeed predictionId={item?._id} />
+						</div>
+					}
+					pickles
+				</div>
 			</div>
 		</>
 	)
