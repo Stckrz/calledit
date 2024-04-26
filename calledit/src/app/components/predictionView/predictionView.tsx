@@ -56,7 +56,7 @@ const Prediction: React.FC<PredictionProps> = ({ item, mode }) => {
 
 	return (
 		<>
-			<div className={"flex flex-col items-start justify-center gap-1 p-6 m-1 border border-gray-200 rounded-md shadow-lg shadow-gray-400 bg-gray-100"}>
+			<div className={"flex flex-col items-start justify-evenly gap-1 p-6 m-1 border border-gray-200 rounded-md shadow-lg shadow-gray-400 bg-gray-100"}>
 				<div className={"w-full"}>
 					<div className={"flex justify-between items-center w-full font-semibold"}>
 						<div className={"text-xl text-wrap break-all"}>{item.title}</div>
