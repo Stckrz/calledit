@@ -1,15 +1,14 @@
 'use client'
+import React, { SetStateAction, useState } from 'react';
+import { useCookies } from 'react-cookie';
+import Link from 'next/link';
 import { IPrediction } from '@/app/models/predictionmodels';
 import VoteScale from '../votescale/votescale';
 import TimeScale from '../timescale/timescale';
-import Link from 'next/link';
 import ThisOrThat from '../common/thisOrThat/thisOrThat';
 import CommentFeed from '../commentfeed/commentfeed';
 import { updatePrediction } from '@/app/library/api/predictionfetch';
-import { useCookies } from 'react-cookie';
 import { userScoreIncrement } from '@/app/library/api/userfetch';
-
-// import PredictionInteraction from '@components/predictionInteraction/predictionInteraction';
 
 export enum Mode {
 	Voting,
@@ -19,10 +18,13 @@ export enum Mode {
 interface PredictionProps {
 	item: IPrediction
 	mode: Mode,
+	reload: boolean,
+	setReload: React.Dispatch<SetStateAction<boolean>>
 }
 
-const Prediction: React.FC<PredictionProps> = ({ item, mode }) => {
-	const [cookie, setCookie] = useCookies(['userInfo'])
+const Prediction: React.FC<PredictionProps> = ({ item, mode, reload, setReload }) => {
+	const [cookie, setCookie] = useCookies(['userInfo']);
+	const [commentView, setCommentView] = useState(false);
 
 	const updatePredictionResult = (result: boolean) => {
 		const updatedData = {
@@ -35,6 +37,7 @@ const Prediction: React.FC<PredictionProps> = ({ item, mode }) => {
 					userScoreIncrement(votes.id)
 				}
 			}
+			setReload(!reload)
 		}
 	}
 
@@ -73,14 +76,11 @@ const Prediction: React.FC<PredictionProps> = ({ item, mode }) => {
 				</div>
 				{modeMarkup(mode)}
 
-				<div>
-				{item.comments}
-					{item._id &&
-						<div>ass
+				<div className={"w-full select-none"}>
+					<div onClick={() => { setCommentView(!commentView) }}>show comments</div>
+					{item._id && commentView &&
 						<CommentFeed predictionId={item?._id} />
-						</div>
 					}
-					pickles
 				</div>
 			</div>
 		</>

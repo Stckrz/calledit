@@ -3,11 +3,17 @@ export interface IComment {
 	title: string,
 	postBody: string,
 	predictionId: string,
+	// replies?: IComment[],
+	// votes?: commentVote[],
+	// _id?: string
+}
+export interface IApiComment extends IComment {
 	replies: IComment[],
-	votes: commentVote[] 
+	votes: commentVote[],
+	_id: string
 }
 
-export interface commentVote{
-	user: string,
+export interface commentVote {
+	username: string,
 	vote: string
 }

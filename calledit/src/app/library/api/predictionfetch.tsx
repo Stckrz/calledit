@@ -47,6 +47,40 @@ export async function getPredictions(input: predictionParamObject) {
 	finally { return newData }
 }
 
+//gets all predictions that a user has made
+export async function getPredictionsByUsername(input: predictionParamObject) {
+	let page;
+	if (input.page) {
+		page = input.page
+	} else {
+		page = 1
+	}
+
+try {
+	const response = await fetch(`http://localhost:5000/predictions/getByUser/${input.username}?page=${page}`)
+	const data = await response.json()
+		console.log(data)
+	return { predictions: data.data, count: data.total }
+}
+catch (error) { console.log(error) }
+}
+
+//gets all predictions a user has voted on
+export async function getPredictionsVotedByUsername(input: predictionParamObject) {
+	let page;
+	if (input.page) {
+		page = input.page
+	} else {
+		page = 1
+	}
+	try {
+		const response = await fetch(`http://localhost:5000/predictions/getVotedByUser/${input.username}?page=${page}`)
+		const data = await response.json()
+		return { predictions: data.data, count: data.total }
+	}
+	catch (error) { console.log(error) }
+}
+
 
 //get the voting info for a prediction, based on id
 export async function getPredictionVotesById(id: string, username: any,) {

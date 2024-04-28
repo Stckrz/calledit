@@ -72,24 +72,3 @@ export async function getUserByUsername(username: string) {
 	catch (error) { console.log(error) }
 }
 
-//gets all predictions that a user has made
-export async function getPredictionsByUsername(username: string, page: number = 1) {
-
-try {
-	const response = await fetch(`http://localhost:5000/predictions/getByUser/${username}?page=${page}`)
-	const data = await response.json()
-	return { predictions: data.data, count: data.total }
-}
-catch (error) { console.log(error) }
-}
-
-//gets all predictions a user has voted on
-export async function getPredictionsVotedByUsername(username: string, page: number = 1) {
-	try {
-		const response = await fetch(`http://localhost:5000/predictions/getVotedByUser/${username}?page=${page}`)
-		const data = await response.json()
-		console.log(data)
-		return { predictions: data.data, count: data.total }
-	}
-	catch (error) { console.log(error) }
-}

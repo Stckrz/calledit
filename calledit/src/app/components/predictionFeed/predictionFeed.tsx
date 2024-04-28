@@ -1,7 +1,6 @@
 'use client'
 import React, { useState, useEffect } from 'react';
-import { getPredictions, predictionReturnObject } from '@/app/library/api/predictionfetch';
-import { getPredictionsByUsername, getPredictionsVotedByUsername } from '@/app/library/api/userfetch';
+import { getPredictions, predictionReturnObject, getPredictionsByUsername, getPredictionsVotedByUsername } from '@/app/library/api/predictionfetch';
 import { IPrediction } from '@/app/models/predictionmodels';
 import { categoryArray } from '@/app/library/objects/categoryArray';
 import Prediction, { Mode } from '@components/predictionView/predictionView';
@@ -26,6 +25,7 @@ const PredictionFeed: React.FC<PredictionFeedProps> = ({ username = "", feedType
 	const [predictionArray, setPredictionArray] = useState<IPrediction[]>([]);
 	const [feedPage, setFeedPage] = useState(1);
 	const [predictionCount, setPredictionCount] = useState(0);
+	const [reload, setReload] = useState(false)
 
 	async function setConfirmedPredictionFeed() {
 		const tempPredictionArray = []
@@ -47,16 +47,16 @@ const PredictionFeed: React.FC<PredictionFeedProps> = ({ username = "", feedType
 		} else if (feedType === FeedType.UserFeed) {
 			if (username) {
 				if (category === "votes") {
-					const predictionObject = await getPredictionsVotedByUsername(username)
+					const predictionObject = await getPredictionsVotedByUsername({ page: feedPage, username: username })
 					setPredictionArray(predictionObject?.predictions)
 					setPredictionCount(predictionObject?.count)
 				}
 				else if (category === "userposts") {
-					const predictionObject = await getPredictionsByUsername(username)
+					const predictionObject = await getPredictionsByUsername({ page: feedPage, username: username })
 					setPredictionArray(predictionObject?.predictions)
 					setPredictionCount(predictionObject?.count)
 				} else {
-					const predictionObject = await getPredictionsByUsername(username)
+					const predictionObject = await getPredictionsByUsername({ page: feedPage, username: username })
 					setPredictionArray(predictionObject?.predictions)
 					setPredictionCount(predictionObject?.count)
 				}
@@ -93,7 +93,7 @@ const PredictionFeed: React.FC<PredictionFeedProps> = ({ username = "", feedType
 
 	useEffect(() => {
 		predictionFetch()
-	}, [category, feedPage])
+	}, [category, feedPage, reload])
 
 	return (
 		<>
@@ -107,7 +107,10 @@ const PredictionFeed: React.FC<PredictionFeedProps> = ({ username = "", feedType
 								<Prediction
 									key={item._id}
 									item={item}
-									mode={feedType === FeedType.ConfirmPrediction ? Mode.Confirming : Mode.Voting} />
+									mode={feedType === FeedType.ConfirmPrediction ? Mode.Confirming : Mode.Voting}
+									reload={reload}
+									setReload={setReload}
+								/>
 							)
 						})
 						}
