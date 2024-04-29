@@ -78,11 +78,19 @@ const PredictionFeed: React.FC<PredictionFeedProps> = ({ username = "", feedType
 		switch (feedType) {
 			case FeedType.Normal:
 				return (
-					<CategoryPicker setCategory={setCategory} category={category} categories={categoryArray} />
+					<CategoryPicker
+						setCategory={setCategory}
+						category={category}
+						categories={categoryArray}
+					/>
 				)
 			case FeedType.UserFeed:
 				return (
-					<Dropdown callback={setCategory} value={category} options={["votes", "userposts"]} />
+					<Dropdown
+						callback={setCategory}
+						value={category}
+						options={["votes", "userposts"]}
+					/>
 				)
 			case FeedType.ConfirmPrediction:
 				return (
@@ -97,11 +105,16 @@ const PredictionFeed: React.FC<PredictionFeedProps> = ({ username = "", feedType
 
 	return (
 		<>
-			<div className={"flex flex-col gap-2 w-1/2 self-center"}>
+			<div className={"flex flex-col gap-2 w-full md:w-1/2 self-center"}>
 				{categoryMarkup(feedType)}
 				{predictionArray?.length > 0
-					? <div className={"flex flex-col gap-2"}>
-						<Pagination setPage={setFeedPage} page={feedPage} entryCount={predictionCount} entryLimit={10} />
+					? <div className={"flex flex-col items-center md:items-end gap-2"}>
+						<Pagination
+							setPage={setFeedPage}
+							page={feedPage}
+							entryCount={predictionCount}
+							entryLimit={10}
+						/>
 						{predictionArray.map((item) => {
 							return (
 								<Prediction

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getCommentsByPredictionId } from "@/app/library/api/commentfetch"
-import { IComment, IApiComment } from '@/app/models/commentmodels';
+import { IApiComment } from '@/app/models/commentmodels';
 import CommentForm from '../forms/commentform/commentform';
 import Comment from '@components/comment/comment';
 

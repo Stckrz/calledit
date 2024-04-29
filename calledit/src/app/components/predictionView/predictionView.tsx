@@ -46,7 +46,11 @@ const Prediction: React.FC<PredictionProps> = ({ item, mode, reload, setReload }
 			case Mode.Voting:
 				return (
 					item._id &&
-					<VoteScale id={item._id} votes={item.votes} prediction={item} />
+					<VoteScale
+						id={item._id}
+						votes={item.votes}
+						prediction={item}
+					/>
 				)
 			case Mode.Confirming:
 				return (
@@ -60,24 +64,41 @@ const Prediction: React.FC<PredictionProps> = ({ item, mode, reload, setReload }
 
 	return (
 		<>
-			<div className={"flex flex-col items-start justify-evenly gap-1 p-6 m-1 border border-gray-200 rounded-md shadow-lg shadow-gray-400 bg-gray-100"}>
-				<div className={"w-full"}>
-					<div className={"flex justify-between items-center w-full font-semibold"}>
-						<div className={"text-xl text-wrap break-all"}>{item.title}</div>
-						<Link href={`/user/profile/${item.author}`}><div>{item.author}</div></Link>
+			<div className={"flex flex-col w-full items-start justify-evenly gap-2 md:gap-1 p-6 md:m-1 border border-gray-200 rounded-md shadow-lg shadow-gray-400 bg-gray-100"}>
+				<div className={"w-full flex flex-col gap-2"}>
+					<div className={"flex flex-col md:flex-row justify-between items-start md:items-center w-full"}>
+						<div className={"w-full text-md md:text-xl text-wrap break-words font-semibold"}>
+							{item.title}
+						</div>
+						<Link href={`/user/profile/${item.author}`}>
+							<div>
+								{item.author}
+							</div>
+						</Link>
 					</div>
-					<div className={"text-sm"}>{item.category}</div>
-					<div className={"border p-1 m-2 border-gray-300 w-full rounded"}>{item.description}</div>
+					<div className={"text-sm"}>
+						{item.category}
+					</div>
+					<div className={"border p-1 md:m-2 border-gray-300 w-full rounded"}>
+						{item.description}
+					</div>
 				</div>
 				<div className={"flex items-center justify-center gap-2 w-full"}>
 					{item.created_on && item.finished_on &&
-						<TimeScale title={item.title} timeCreated={item.created_on} timeFinished={item.finished_on} completed={item.completed} />
+						<TimeScale
+							title={item.title}
+							timeCreated={item.created_on}
+							timeFinished={item.finished_on}
+							completed={item.completed}
+						/>
 					}
 				</div>
 				{modeMarkup(mode)}
 
 				<div className={"w-full select-none"}>
-					<div onClick={() => { setCommentView(!commentView) }}>{`show comments (${item.comments?.length})`}</div>
+					<div onClick={() => { setCommentView(!commentView) }}>
+						{`show comments (${item.comments?.length})`}
+					</div>
 					{item._id && commentView &&
 						<CommentFeed predictionId={item?._id} />
 					}

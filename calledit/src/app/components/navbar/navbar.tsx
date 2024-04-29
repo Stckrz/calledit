@@ -22,18 +22,14 @@ const Navbar: React.FC = () => {
 					</div>
 					{mobileNavShown &&
 						<div className={"h-screen w-full absolute top-20 bg-background-gray"}>
-							<div
-								className={"h-1/6 m-1 bg-cyan-500 border border-black flex items-center justify-center rounded"}>
-								<Link href="/">
-									<div className={"flex items-center justify-center gap-1"}>
-										<AiOutlineHome size={"1.5em"} />
-										Home
-									</div>
-								</Link>
-							</div>
-							<div className={"h-1/6 m-1 bg-cyan-500 border border-black flex items-center justify-center rounded"}>home</div>
+							<Link href="/">
+								<div onClick={() => { setMobileNavShown(false) }} className={"h-1/6 m-1 bg-cyan-500 border border-black flex items-center justify-center rounded"}>
+									<AiOutlineHome size={"1.5em"} />
+									Home
+								</div>
+							</Link>
 							<Link href="/prediction-page">
-								<div className={"h-1/6 m-1 bg-cyan-500 border border-black flex items-center justify-center rounded"}>
+								<div onClick={() => { setMobileNavShown(false) }} className={"h-1/6 m-1 bg-cyan-500 border border-black flex items-center justify-center rounded"}>
 									New
 								</div>
 							</Link>
