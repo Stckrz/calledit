@@ -1,6 +1,7 @@
 import { postNewComment } from '@/app/library/api/commentfetch';
 import React, { useState, useEffect, SetStateAction } from 'react';
 import { useCookies } from 'react-cookie';
+import { addPredictionComment } from '@/app/library/api/predictionfetch';
 
 interface CommentFormProps{
 	predictionId: string,
@@ -26,6 +27,7 @@ const CommentForm: React.FC<CommentFormProps> = ({predictionId, getComments, set
 			}
 			let a = await postNewComment(commentData, cookie.userInfo?.token, predictionId)
 			if (a._id) {
+				await addPredictionComment(a._id, predictionId, cookie.userInfo?.token)
 				setTitle("")
 				setPostBody("")
 				getComments()

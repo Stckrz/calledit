@@ -77,7 +77,7 @@ const Prediction: React.FC<PredictionProps> = ({ item, mode, reload, setReload }
 				{modeMarkup(mode)}
 
 				<div className={"w-full select-none"}>
-					<div onClick={() => { setCommentView(!commentView) }}>show comments</div>
+					<div onClick={() => { setCommentView(!commentView) }}>{`show comments (${item.comments?.length})`}</div>
 					{item._id && commentView &&
 						<CommentFeed predictionId={item?._id} />
 					}

@@ -15,33 +15,16 @@ router.get('/getAll', async (req, res) => {
 	}
 })
 //
-// router.delete('/deleteAll', async (req, res) => {
-// 	try {
-// 		const comments = await CommentModel.deleteMany({})
-// 		res.json(comments)
-// 	}
-// 	catch (error) {
-// 		res.status(400).json({ message: error.message })
-// 	}
-// })
-//
-// router.get('/getByCategory/:category', async (req, res) => {
-// 	const category = req.params.category
-//
-// 	let page = req.query.page;
-// 	const limit = 10;
-// 	let skip;
-// 	skip = (page - 1) * limit;
-//
-// 	try {
-// 		const total = await PredictionModel.countDocuments({ "category": category })
-// 		const data = await PredictionModel.find({ "category": category }).skip(skip).limit(limit)
-// 		res.json({ data, total })
-// 	}
-// 	catch (error) {
-// 		res.status(500).json({ message: error.message })
-// 	}
-// })
+router.delete('/deleteAll', async (req, res) => {
+	try {
+		const comments = await CommentModel.deleteMany({})
+		res.json(comments)
+	}
+	catch (error) {
+		res.status(400).json({ message: error.message })
+	}
+})
+
 
 router.get('/getByPredictionId/:id', async (req, res) => {
 	const predictionId = req.params.id;
@@ -104,5 +87,6 @@ router.patch('/update/:id', isLoggedIn, async (req, res) => {
 		res.status(400).json({ message: error.message })
 	}
 })
+
 
 module.exports = router;

@@ -197,6 +197,20 @@ router.patch('/update/:id', isLoggedIn, async (req, res) => {
 	}
 })
 
+router.patch('/addComment/:id', isLoggedIn, async (req, res) => {
+	const { username } = req.user;
+	req.body.username = username;
+	try {
+		const id = req.params.id;
+		const commentId = req.body.commentId;
+		const result = await PredictionModel.updateOne({_id: id}, {$push: {comments: commentId}})
+		res.send(result)
+	}
+	catch (error) {
+		res.status(400).json({ message: error.message })
+	}
+})
+
 router.delete('/delete/:id', isLoggedIn, async (req, res) => {
 	const { username } = req.user;
 	req.body.username = username;

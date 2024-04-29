@@ -2,13 +2,11 @@
 /*
 Final things to iron out : 
 BUGS:
---Comments need to update the prediction, adding the comment ID to the prediction
+--Check comment generation.. there is a potential situation where a comment could be created, but not update the prediction array with the comment id
 --Find a way to send notifications. right now, they are only sent when the user logs in :/
 --Find a way to refresh user cookie. right now, it DOES expire, but it does no whether the user is active or not, after 30 mins.
 --Fix navbar, so that it is sticky instead of scrolling away.
---Prediction confirmation does not update when button is clicked, but it should.
 --user profile dropdown does not show current selection
---Home feed category selection does not show current selection
 --Responsive design is broken, and needs a complete overhaul..
 
 
@@ -67,5 +65,4 @@ XX--user dashboard predictions - ones that the user needs to confirm, and past p
 
   
  })
- Potatoforce12@
  */

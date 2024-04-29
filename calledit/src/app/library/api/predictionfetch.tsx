@@ -115,6 +115,22 @@ export async function updatePrediction(updatedPredictionData: Partial<IPredictio
 	catch (error) { console.log(error) }
 }
 
+export async function addPredictionComment(commentId: string, id: string, token: string) {
+	try {
+		const response = await fetch(`http://localhost:5000/predictions/addComment/${id}`, {
+			method: "PATCH",
+			headers: {
+				'Content-Type': 'application/json',
+				'authorization': `bearer ${token}`
+			},
+			body: JSON.stringify({ commentId: commentId })
+		})
+		const data = await response.json()
+		return data
+	}
+	catch (error) { console.log(error) }
+}
+
 //add a new prediction
 export async function addPrediction(predictionData: IPrediction, token: string) {
 	try {

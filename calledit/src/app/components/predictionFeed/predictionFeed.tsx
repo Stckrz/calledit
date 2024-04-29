@@ -78,11 +78,11 @@ const PredictionFeed: React.FC<PredictionFeedProps> = ({ username = "", feedType
 		switch (feedType) {
 			case FeedType.Normal:
 				return (
-					<CategoryPicker setCategory={setCategory} categories={categoryArray} />
+					<CategoryPicker setCategory={setCategory} category={category} categories={categoryArray} />
 				)
 			case FeedType.UserFeed:
 				return (
-					<Dropdown callback={setCategory} options={["votes", "userposts"]} />
+					<Dropdown callback={setCategory} value={category} options={["votes", "userposts"]} />
 				)
 			case FeedType.ConfirmPrediction:
 				return (
