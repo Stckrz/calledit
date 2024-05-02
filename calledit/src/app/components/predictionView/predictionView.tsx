@@ -6,7 +6,7 @@ import { IPrediction } from '@/app/models/predictionmodels';
 import VoteScale from '../votescale/votescale';
 import TimeScale from '../timescale/timescale';
 import ThisOrThat from '../common/thisOrThat/thisOrThat';
-import CommentFeed from '../commentfeed/commentfeed';
+import CommentFeed, { CommentFeedType } from '../commentfeed/commentfeed';
 import { updatePrediction } from '@/app/library/api/predictionfetch';
 import { userScoreIncrement } from '@/app/library/api/userfetch';
 
@@ -57,7 +57,7 @@ const Prediction: React.FC<PredictionProps> = ({ item, mode, reload, setReload }
 								{`show comments (${item.comments?.length})`}
 							</div>
 							{item._id && commentView &&
-								<CommentFeed predictionId={item?._id} />
+								<CommentFeed commentFeedType={CommentFeedType.PostComment} parentId={item?._id} />
 							}
 						</div>
 					</div>

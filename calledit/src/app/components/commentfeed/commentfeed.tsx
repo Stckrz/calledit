@@ -5,10 +5,15 @@ import CommentForm from '../forms/commentform/commentform';
 import Comment from '@components/comment/comment';
 
 interface commentFeedProps {
-	predictionId: string
+	parentId: string,
+	commentFeedType: CommentFeedType
+}
+export enum CommentFeedType {
+	PostComment,
+	CommentReplies
 }
 
-const CommentFeed: React.FC<commentFeedProps> = ({ predictionId }) => {
+const CommentFeed: React.FC<commentFeedProps> = ({ parentId, commentFeedType }) => {
 	const [comments, setComments] = useState<any>();
 	const [showCommentForm, setShowCommentForm] = useState(false);
 	const [feedPage, setFeedPage] = useState(1);
@@ -16,26 +21,29 @@ const CommentFeed: React.FC<commentFeedProps> = ({ predictionId }) => {
 
 
 	async function getComments() {
-		const commentObject = await getCommentsByPredictionId({ page: feedPage, id: predictionId })
+		const commentObject = await getCommentsByPredictionId({ page: feedPage, id: parentId })
 		setComments(commentObject?.comments)
 		setCommentCount(commentObject?.count)
 	}
 
 	useEffect(() => {
 		getComments()
-	}, [predictionId]);
+	}, [parentId]);
 
 	return (
 		<>
-			<div className={"w-full flex flex-col gap-2 max-h-96 overflow-auto border p-1"}>
-				<div
-					className={"cursor-pointer"}
-					onClick={() => { setShowCommentForm(!showCommentForm) }}>
-					add comment
-				</div>
+			{/* <div className={"w-full flex flex-col gap-2 max-h-96 overflow-auto border p-1"}> */}
+			<div className={"w-full flex flex-col gap-2 overflow-auto border p-1"}>
+				{commentFeedType === CommentFeedType.PostComment &&
+					<div
+						className={"cursor-pointer"}
+						onClick={() => { setShowCommentForm(!showCommentForm) }}>
+						add comment
+					</div>
+				}
 				{showCommentForm &&
 					<CommentForm
-						predictionId={predictionId}
+						parentId={parentId}
 						getComments={getComments}
 						setShowCommentForm={setShowCommentForm}
 					/>

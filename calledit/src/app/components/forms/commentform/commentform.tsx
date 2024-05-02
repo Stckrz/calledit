@@ -4,11 +4,12 @@ import { useCookies } from 'react-cookie';
 import { addPredictionComment } from '@/app/library/api/predictionfetch';
 
 interface CommentFormProps {
-	predictionId: string,
+	parentId: string,
 	getComments: Function,
 	setShowCommentForm: React.Dispatch<SetStateAction<boolean>>
 }
-const CommentForm: React.FC<CommentFormProps> = ({ predictionId, getComments, setShowCommentForm }) => {
+
+const CommentForm: React.FC<CommentFormProps> = ({ parentId, getComments, setShowCommentForm }) => {
 	const [title, setTitle] = useState("");
 	const [postBody, setPostBody] = useState("");
 	const [commentError, setCommentError] = useState("");
@@ -23,11 +24,11 @@ const CommentForm: React.FC<CommentFormProps> = ({ predictionId, getComments, se
 				"author": cookie.userInfo.username,
 				"title": title,
 				"postBody": postBody,
-				"predictionId": predictionId
+				"parentId": parentId
 			}
-			let a = await postNewComment(commentData, cookie.userInfo?.token, predictionId)
+			let a = await postNewComment(commentData, cookie.userInfo?.token, parentId)
 			if (a._id) {
-				await addPredictionComment(a._id, predictionId, cookie.userInfo?.token)
+				await addPredictionComment(a._id, parentId, cookie.userInfo?.token)
 				setTitle("")
 				setPostBody("")
 				getComments()

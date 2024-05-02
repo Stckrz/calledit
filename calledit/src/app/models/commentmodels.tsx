@@ -2,7 +2,7 @@ export interface IComment {
 	author: string,
 	title: string,
 	postBody: string,
-	predictionId: string,
+	parentId: string,
 	// replies?: IComment[],
 	// votes?: commentVote[],
 	// _id?: string

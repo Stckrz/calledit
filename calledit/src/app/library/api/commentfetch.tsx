@@ -59,6 +59,23 @@ export async function updateComment(commentData: Partial<IApiComment>, token: st
 		console.log(error)
 	}
 }
+export async function commentReply(commentId: string, token: string, parentCommentId: string) {
+	try {
+		const response = await fetch(`http://localhost:5000/comments/addReplyToComment/${parentCommentId}`, {
+			method: "PATCH",
+			headers: {
+				'Content-Type': 'application/json',
+				'authorization': `bearer ${token}`
+			},
+			body: JSON.stringify({ commentId: commentId })
+		})
+		const data = await response.json()
+		return data
+	}
+	catch (error) {
+		console.log(error)
+	}
+}
 // export async function getPredictionsByUsername(input: predictionParamObject) {
 // 	let page;
 // 	if (input.page) {

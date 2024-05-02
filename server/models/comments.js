@@ -14,7 +14,7 @@ const CommentSchema = new mongoose.Schema({
 		type: String,
 		required: true
 	},
-	predictionId: {
+	parentId: {
 		type: String,
 		required: true
 	},

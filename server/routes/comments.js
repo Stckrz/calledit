@@ -27,7 +27,7 @@ router.delete('/deleteAll', async (req, res) => {
 
 
 router.get('/getByPredictionId/:id', async (req, res) => {
-	const predictionId = req.params.id;
+	const parentId = req.params.id;
 
 	let page = req.query.page;
 	const limit = 10;
@@ -35,8 +35,26 @@ router.get('/getByPredictionId/:id', async (req, res) => {
 	skip = (page - 1) * limit;
 
 	try {
-		const total = await CommentModel.countDocuments({ predictionId: predictionId })
-		const comments = await CommentModel.find({ predictionId: predictionId })
+		const total = await CommentModel.countDocuments({ parentId: parentId })
+		const comments = await CommentModel.find({ parentId: parentId })
+		res.json(({ comments, total }))
+	}
+	catch (error) {
+		res.status(400).json({ message: error.message })
+	}
+})
+
+router.get('/getRepliesByCommentId/:id', async (req, res) => {
+	const parentId = req.params.id;
+
+	let page = req.query.page;
+	const limit = 10;
+	let skip;
+	skip = (page - 1) * limit;
+
+	try {
+		const total = await CommentModel.countDocuments({ parentId: parentId })
+		const comments = await CommentModel.find({ parentId: parentId })
 		res.json(({ comments, total }))
 	}
 	catch (error) {
@@ -62,7 +80,7 @@ router.post('/post', isLoggedIn, async (req, res) => {
 		author: req.body.username,
 		title: req.body.title,
 		postBody: req.body.postBody,
-		predictionId: req.body.predictionId
+		parentId: req.body.parentId
 	})
 	try {
 		const dataToSave = await data.save();
@@ -85,6 +103,20 @@ router.patch('/update/:id', isLoggedIn, async (req, res) => {
 	}
 	catch (error) {
 		res.status(400).json({ message: error.message })
+	}
+})
+
+router.patch('/addReplyToComment/:id', isLoggedIn, async (req, res)=>{
+	const { username } = req.user;
+	req.body.username = username;
+	try{
+		const id = req.params.id;
+		const commentReply = req.body
+		const result = await CommentModel.updateOne({_id: id}, {$push: {replies: commentId}})
+		res.send(result)
+	}
+	catch (error) {
+		res.status(400).json({message: error.message})
 	}
 })
 
