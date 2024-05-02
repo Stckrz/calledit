@@ -46,11 +46,21 @@ const Prediction: React.FC<PredictionProps> = ({ item, mode, reload, setReload }
 			case Mode.Voting:
 				return (
 					item._id &&
-					<VoteScale
-						id={item._id}
-						votes={item.votes}
-						prediction={item}
-					/>
+					<div className={"w-full"}>
+						<VoteScale
+							id={item._id}
+							votes={item.votes}
+							prediction={item}
+						/>
+						<div className={"w-full select-none"}>
+							<div className={"cursor-pointer"} onClick={() => { setCommentView(!commentView) }}>
+								{`show comments (${item.comments?.length})`}
+							</div>
+							{item._id && commentView &&
+								<CommentFeed predictionId={item?._id} />
+							}
+						</div>
+					</div>
 				)
 			case Mode.Confirming:
 				return (
@@ -95,14 +105,14 @@ const Prediction: React.FC<PredictionProps> = ({ item, mode, reload, setReload }
 				</div>
 				{modeMarkup(mode)}
 
-				<div className={"w-full select-none"}>
-					<div onClick={() => { setCommentView(!commentView) }}>
-						{`show comments (${item.comments?.length})`}
-					</div>
-					{item._id && commentView &&
-						<CommentFeed predictionId={item?._id} />
-					}
-				</div>
+				{/* <div className={"w-full select-none"}> */}
+				{/* 	<div onClick={() => { setCommentView(!commentView) }}> */}
+				{/* 		{`show comments (${item.comments?.length})`} */}
+				{/* 	</div> */}
+				{/* 	{item._id && commentView && */}
+				{/* 		<CommentFeed predictionId={item?._id} /> */}
+				{/* 	} */}
+				{/* </div> */}
 			</div>
 		</>
 	)

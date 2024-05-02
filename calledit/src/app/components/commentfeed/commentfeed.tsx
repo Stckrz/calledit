@@ -28,9 +28,17 @@ const CommentFeed: React.FC<commentFeedProps> = ({ predictionId }) => {
 	return (
 		<>
 			<div className={"w-full flex flex-col gap-2 max-h-96 overflow-auto border p-1"}>
-				<div onClick={() => { setShowCommentForm(!showCommentForm) }}>add comment</div>
+				<div
+					className={"cursor-pointer"}
+					onClick={() => { setShowCommentForm(!showCommentForm) }}>
+					add comment
+				</div>
 				{showCommentForm &&
-					<CommentForm predictionId={predictionId} getComments={getComments} setShowCommentForm={setShowCommentForm} />
+					<CommentForm
+						predictionId={predictionId}
+						getComments={getComments}
+						setShowCommentForm={setShowCommentForm}
+					/>
 				}
 				{comments !== undefined &&
 					comments.map((item: IApiComment) => {

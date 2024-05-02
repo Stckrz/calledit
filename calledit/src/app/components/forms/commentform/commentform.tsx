@@ -3,12 +3,12 @@ import React, { useState, useEffect, SetStateAction } from 'react';
 import { useCookies } from 'react-cookie';
 import { addPredictionComment } from '@/app/library/api/predictionfetch';
 
-interface CommentFormProps{
+interface CommentFormProps {
 	predictionId: string,
 	getComments: Function,
 	setShowCommentForm: React.Dispatch<SetStateAction<boolean>>
-	}
-const CommentForm: React.FC<CommentFormProps> = ({predictionId, getComments, setShowCommentForm}) => {
+}
+const CommentForm: React.FC<CommentFormProps> = ({ predictionId, getComments, setShowCommentForm }) => {
 	const [title, setTitle] = useState("");
 	const [postBody, setPostBody] = useState("");
 	const [commentError, setCommentError] = useState("");
@@ -32,7 +32,7 @@ const CommentForm: React.FC<CommentFormProps> = ({predictionId, getComments, set
 				setPostBody("")
 				getComments()
 				setShowCommentForm(false)
-			} else{
+			} else {
 				setCommentError(a.message)
 			}
 		}
@@ -41,7 +41,9 @@ const CommentForm: React.FC<CommentFormProps> = ({predictionId, getComments, set
 	return (
 		<>
 			<div className={"flex flex-col items-start justify-center gap-1"}>
-				<div className={"w-full flex flex-col items-center justify-center gap-1 p-6 border bordergray-00 rounded-xl shadow shadow-gray-400 bg-gray-100 my-2"}>
+				<div
+					className={"w-full flex flex-col items-center justify-center gap-1 p-6 border bordergray-00 rounded-xl shadow shadow-gray-400 bg-gray-100 my-2"}
+				>
 					<label className={"w-full flex flex-col font-bold text-gray-600"}>Title
 						<input className={"input-primary w-1/2"} onChange={e => { setTitle(e.target.value) }} />
 					</label>
