@@ -131,6 +131,7 @@ export async function addPredictionComment(commentId: string, id: string, token:
 	catch (error) { console.log(error) }
 }
 
+
 //add a new prediction
 export async function addPrediction(predictionData: IPrediction, token: string) {
 	try {

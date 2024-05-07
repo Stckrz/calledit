@@ -3,7 +3,8 @@ import { updateComment, getCommentsByPredictionId } from "@/app/library/api/comm
 import { commentVote, IApiComment } from "@/app/models/commentmodels"
 import { BiDownvote, BiSolidDownvote, BiUpvote, BiSolidUpvote } from "react-icons/bi"
 import { useCookies } from 'react-cookie';
-import CommentFeed, { CommentFeedType } from '../commentfeed/commentfeed';
+import CommentFeed from '../commentfeed/commentfeed';
+import CommentForm, { CommentParentType } from '../forms/commentform/commentform';
 
 interface CommentProps {
 	commentObject: IApiComment
@@ -14,6 +15,8 @@ const Comment: React.FC<CommentProps> = ({ commentObject }) => {
 	const [cookie, setCookie] = useCookies(['userInfo']);
 	const [comments, setComments] = useState([]);
 	const [commentCount, setCommentCount] = useState(0);
+	const [showComments, setShowComments] = useState(false);
+	const [showCommentForm, setShowCommentForm] = useState(false);
 	const [feedPage, setFeedPage] = useState(1);
 
 	async function checkUserVote() {
@@ -64,24 +67,39 @@ const Comment: React.FC<CommentProps> = ({ commentObject }) => {
 			<div>{commentObject.author}</div>
 			<div>{commentObject.title}</div>
 			<div>{commentObject.postBody}</div>
-			<div className={"flex justify-between w-full"}>
-				<div className={"flex"}>
-					<div onClick={() => { commentVoteHandler("yes") }}>
-						{userVote === "yes"
-							? <BiSolidUpvote className={"text-cyan-500 text-xl"} />
-							: <BiUpvote className={"text-cyan-500 text-xl"} />
-						}
+			<div className={"flex justify-between w-full border-t border-t-gray-400 py-1"}>
+				<div className={"flex justify-between w-full"}>
+					<div className={"flex"}>
+						<div onClick={() => { commentVoteHandler("yes") }}>
+							{userVote === "yes"
+								? <BiSolidUpvote className={"text-cyan-500 text-xl"} />
+								: <BiUpvote className={"text-cyan-500 text-xl"} />
+							}
+						</div>
+						<div onClick={() => { commentVoteHandler("no") }}>
+							{userVote === "no"
+								? <BiSolidDownvote className={"text-cinna text-xl"} />
+								: <BiDownvote className={"text-cinna text-xl"} />
+							}
+						</div>
 					</div>
-					<div onClick={() => { commentVoteHandler("no") }}>
-						{userVote === "no"
-							? <BiSolidDownvote className={"text-cinna text-xl"} />
-							: <BiDownvote className={"text-cinna text-xl"} />
-						}
-					</div>
+					<div onClick={() => { setShowCommentForm(true) }}>reply</div>
 				</div>
 			</div>
+			{showCommentForm &&
+				<CommentForm
+					parentId={commentObject._id}
+					setShowCommentForm={setShowCommentForm}
+					getComments={getComments}
+					commentParentType={CommentParentType.CommentParent}
+				/>
+
+			}
 			{commentObject.replies.length > 0 &&
-				<CommentFeed commentFeedType={CommentFeedType.CommentReplies} parentId={commentObject._id} />
+				<div onClick={() => { setShowComments(!showComments) }}>{`show comments (${commentCount})`}</div>
+			}
+			{showComments &&
+				<CommentFeed parentId={commentObject._id} />
 			}
 		</div >
 

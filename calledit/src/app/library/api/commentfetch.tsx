@@ -59,7 +59,7 @@ export async function updateComment(commentData: Partial<IApiComment>, token: st
 		console.log(error)
 	}
 }
-export async function commentReply(commentId: string, token: string, parentCommentId: string) {
+export async function commentReply(commentId: string, parentCommentId: string, token: string) {
 	try {
 		const response = await fetch(`http://localhost:5000/comments/addReplyToComment/${parentCommentId}`, {
 			method: "PATCH",
@@ -76,6 +76,22 @@ export async function commentReply(commentId: string, token: string, parentComme
 		console.log(error)
 	}
 }
+// export async function addCommentReply(commentId: string, id: string, token: string) {
+// 	try {
+// 		const response = await fetch(`http://localhost:5000/comments/addComment/${id}`, {
+// 			method: "PATCH",
+// 			headers: {
+// 				'Content-Type': 'application/json',
+// 				'authorization': `bearer ${token}`
+// 			},
+// 			body: JSON.stringify({ commentId: commentId })
+// 		})
+// 		const data = await response.json()
+// 		return data
+// 	}
+// 	catch (error) { console.log(error) }
+// }
+//
 // export async function getPredictionsByUsername(input: predictionParamObject) {
 // 	let page;
 // 	if (input.page) {

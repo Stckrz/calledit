@@ -91,6 +91,20 @@ router.post('/post', isLoggedIn, async (req, res) => {
 	}
 })
 
+router.patch('/addComment/:id', isLoggedIn, async (req, res) => {
+	const { username } = req.user;
+	req.body.username = username;
+	try {
+		const id = req.params.id;
+		const commentId = req.body.commentId;
+		const result = await CommentModel.updateOne({_id: id}, {$push: {replies: commentId}})
+		res.send(result)
+	}
+	catch (error) {
+		res.status(400).json({ message: error.message })
+	}
+})
+
 router.patch('/update/:id', isLoggedIn, async (req, res) => {
 	const { username } = req.user;
 	req.body.username = username;
@@ -111,7 +125,7 @@ router.patch('/addReplyToComment/:id', isLoggedIn, async (req, res)=>{
 	req.body.username = username;
 	try{
 		const id = req.params.id;
-		const commentReply = req.body
+		const commentId = req.body.commentId;
 		const result = await CommentModel.updateOne({_id: id}, {$push: {replies: commentId}})
 		res.send(result)
 	}

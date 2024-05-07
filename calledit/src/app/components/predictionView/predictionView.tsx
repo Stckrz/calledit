@@ -57,7 +57,7 @@ const Prediction: React.FC<PredictionProps> = ({ item, mode, reload, setReload }
 								{`show comments (${item.comments?.length})`}
 							</div>
 							{item._id && commentView &&
-								<CommentFeed commentFeedType={CommentFeedType.PostComment} parentId={item?._id} />
+								<CommentFeed parentId={item?._id} />
 							}
 						</div>
 					</div>
@@ -104,15 +104,6 @@ const Prediction: React.FC<PredictionProps> = ({ item, mode, reload, setReload }
 					}
 				</div>
 				{modeMarkup(mode)}
-
-				{/* <div className={"w-full select-none"}> */}
-				{/* 	<div onClick={() => { setCommentView(!commentView) }}> */}
-				{/* 		{`show comments (${item.comments?.length})`} */}
-				{/* 	</div> */}
-				{/* 	{item._id && commentView && */}
-				{/* 		<CommentFeed predictionId={item?._id} /> */}
-				{/* 	} */}
-				{/* </div> */}
 			</div>
 		</>
 	)

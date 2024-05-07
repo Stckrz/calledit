@@ -1,6 +1,11 @@
 'use client'
 import React, { useState, useEffect } from 'react';
-import { getPredictions, predictionReturnObject, getPredictionsByUsername, getPredictionsVotedByUsername } from '@/app/library/api/predictionfetch';
+import {
+	getPredictions,
+	predictionReturnObject,
+	getPredictionsByUsername,
+	getPredictionsVotedByUsername
+} from '@/app/library/api/predictionfetch';
 import { IPrediction } from '@/app/models/predictionmodels';
 import { categoryArray } from '@/app/library/objects/categoryArray';
 import Prediction, { Mode } from '@components/predictionView/predictionView';
@@ -135,4 +140,4 @@ const PredictionFeed: React.FC<PredictionFeedProps> = ({ username = "", feedType
 	)
 }
 
-export default PredictionFeed
+export default PredictionFeed;

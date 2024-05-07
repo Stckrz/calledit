@@ -2,14 +2,21 @@ import { postNewComment } from '@/app/library/api/commentfetch';
 import React, { useState, useEffect, SetStateAction } from 'react';
 import { useCookies } from 'react-cookie';
 import { addPredictionComment } from '@/app/library/api/predictionfetch';
+import { commentReply } from '@/app/library/api/commentfetch';
 
 interface CommentFormProps {
 	parentId: string,
 	getComments: Function,
-	setShowCommentForm: React.Dispatch<SetStateAction<boolean>>
+	setShowCommentForm: React.Dispatch<SetStateAction<boolean>>,
+	commentParentType: CommentParentType
 }
 
-const CommentForm: React.FC<CommentFormProps> = ({ parentId, getComments, setShowCommentForm }) => {
+export enum CommentParentType {
+	CommentParent,
+	PredictionParent
+}
+
+const CommentForm: React.FC<CommentFormProps> = ({ parentId, getComments, setShowCommentForm, commentParentType }) => {
 	const [title, setTitle] = useState("");
 	const [postBody, setPostBody] = useState("");
 	const [commentError, setCommentError] = useState("");
@@ -28,7 +35,11 @@ const CommentForm: React.FC<CommentFormProps> = ({ parentId, getComments, setSho
 			}
 			let a = await postNewComment(commentData, cookie.userInfo?.token, parentId)
 			if (a._id) {
-				await addPredictionComment(a._id, parentId, cookie.userInfo?.token)
+				if (commentParentType === CommentParentType.PredictionParent) {
+					await addPredictionComment(a._id, parentId, cookie.userInfo?.token)
+				} else if (commentParentType === CommentParentType.CommentParent) {
+					await commentReply(a._id, parentId, cookie.userInfo?.token)
+				}
 				setTitle("")
 				setPostBody("")
 				getComments()
